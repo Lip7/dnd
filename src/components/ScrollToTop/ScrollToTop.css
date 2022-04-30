@@ -1,0 +1,29 @@
+.ToTopButton{
+    transition: all .25s ease-in-out;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    margin: 0 15.5% 3% 0;
+    border-radius: 20%;
+    border-color: transparent;
+    width: 60px;
+    height: 60px;
+    background-color: #F8F8F8;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+
+}
+
+.ToTopButton:hover{
+    background-color:rgba(158, 82, 75, 1);
+
+}
+
+.ToTopImage{
+    height: 50%;
+
+}

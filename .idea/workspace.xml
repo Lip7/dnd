@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="53577b44-0edc-4738-8be7-1283da84c7c7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1zoV8IPD3ge9i9Nz5XkNHaem1kC" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\pbuch\Documents\Master\SecondSemester\MMI\thingy-client-purple\src\components\Login" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="53577b44-0edc-4738-8be7-1283da84c7c7" name="Default Changelist" comment="" />
+      <created>1634814271287</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1634814271287</updated>
+      <workItem from="1634814275463" duration="11261000" />
+      <workItem from="1635079290485" duration="1808000" />
+      <workItem from="1635502508140" duration="11588000" />
+      <workItem from="1635669700395" duration="27746000" />
+      <workItem from="1635845898234" duration="7000" />
+      <workItem from="1635867572588" duration="675000" />
+      <workItem from="1636288733813" duration="23000" />
+      <workItem from="1636806289756" duration="605000" />
+      <workItem from="1636904313261" duration="5860000" />
+      <workItem from="1637264227157" duration="133000" />
+      <workItem from="1637264688437" duration="1791000" />
+      <workItem from="1637402637648" duration="4107000" />
+      <workItem from="1637828718726" duration="17056000" />
+      <workItem from="1638094137103" duration="19139000" />
+      <workItem from="1638293938585" duration="14000" />
+      <workItem from="1639038894554" duration="2324000" />
+      <workItem from="1639921303368" duration="3551000" />
+      <workItem from="1640024785322" duration="3521000" />
+      <workItem from="1640089367924" duration="11280000" />
+      <workItem from="1651132323428" duration="5937000" />
+      <workItem from="1651257517113" duration="7369000" />
+      <workItem from="1651310663165" duration="3508000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+</project>
