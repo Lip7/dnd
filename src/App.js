@@ -10,6 +10,7 @@ import Authservice from "./components/services/Authservice";
 import {Component} from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+
 class App extends Component{
     constructor(props) {
         super(props);
@@ -17,8 +18,9 @@ class App extends Component{
         this.state ={
             currentUser: undefined,
         }
-
     }
+
+
 
     //logout if token expired
     logOut() {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
@@ -56,6 +56,13 @@ const getListStyle = isDraggingOver => ({
 
 function QuoteApp() {
     const [state, setState] = useState([getItems(10), getItems(5, 10), getItems(5, 15)]);
+
+    useEffect(()=>{
+        const webgazer=window.webgazer
+        webgazer.setGazeListener((data,clock)=>{
+            console.log(data, clock)
+        }).begin()
+    }, []);
 
     function onDragEnd(result) {
         const { source, destination } = result;
