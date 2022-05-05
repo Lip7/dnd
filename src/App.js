@@ -17,6 +17,9 @@ class App extends Component{
         this.logOut = this.logOut.bind(this)
         this.state ={
             currentUser: undefined,
+            xoffset: 1000,
+            yoffset: 1000,
+            delta: 10,
         }
     }
 
@@ -34,6 +37,7 @@ class App extends Component{
 
         return (
             <div className="App">
+
                 <div className={"back"}>
                     <BrowserRouter>
                         <Nav />

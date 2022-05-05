@@ -29,7 +29,7 @@ class Nav extends Component{
 
         return(
             <nav className={"NavbarItems"}>
-                <Link to="/studysession" style={{ textDecoration: 'none' }}><h1 className={" navbar-logo"}>MMI Project</h1></Link>
+                <Link to="/studysession" style={{ textDecoration: 'none', justifyContent:'center' }}><h1 className={" navbar-logo"}>MMI </h1></Link>
 
                 <div className={'nav-menu'}>
                     {user!=undefined?<Link to={"/studysession"}>
