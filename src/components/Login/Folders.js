@@ -3,16 +3,15 @@ import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 /* TODO:
-- do not show every time click on item a new red point/rendering eye gazing again
-- when not looking at the screen, there are no x y coordinates and system crushes...
-
-
+- Enable that the user needs to Drag and Drop shortly, then press the space key to freeze the selected item which will then be shifted with eye gazing
+- As soon as an item is clicked on the button move, then a new red point/eye gazing will be shown again
+- Sometimes, when not looking at the screen or when there are no x y coordinates detected by the eye gazing, the system crashes
+- Show an object at the red point position while moving/selecting the folder
+- When the user looks at the destination folder, it gets highlighted to improve the selection
 
  */
 
-
-
-// fake data generator
+// Item in list generator
 const getItems = (count, offset = 0) =>
     Array.from({ length: count }, (v, k) => k).map(k => ({
         id: `item-${k + offset}-${new Date().getTime()}`,
@@ -31,12 +30,6 @@ const reorder = (list, startIndex, endIndex) => {
  * Moves an item from one list to another list.
  */
 const move = (source, destination, droppableSource, droppableDestination) => {
-
-    console.log(source)
-    console.log(destination)
-    console.log( droppableSource)
-    console.log( droppableDestination)
-
 
     const sourceClone = Array.from(source);
     const destClone = Array.from(destination);
@@ -65,17 +58,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
     ...draggableStyle
 });
 
-const getItemStyleClick = (isClicking) => ({
-    // some basic styles to make the items look a bit nicer
-    userSelect: "none",
-    padding: grid * 2,
-    margin: `0 0 ${grid}px 0`,
-
-    // change background colour if dragging
-    background: isClicking ? "lightgreen" : "grey",
-
-});
-
+// Style of the Folders (Here change to activate the folders/list when user selects the destination folder???)
 const getListStyle = isDraggingOver => ({
     background: isDraggingOver ? "lightblue" : "lightgrey",
     padding: grid,
@@ -100,106 +83,61 @@ function QuoteApp() {
     const [sourceDroppableId, setsourceDroppableId] = useState(-1)
     const [sourceIndex, setsourceIndex] = useState(-1)
 
+    // Lines which separate the folders in order to detect which folder is in the eye gazing field
+    let beforeLineBelongsF1 = window.innerWidth/100*80/4 + window.innerWidth/10 // Folder 1
+    let beforeLineBelongsF2 = window.innerWidth/100*80/4*2 + window.innerWidth/10 // Folder 2
+    let beforeLineBelongsF3 = window.innerWidth/100*80/4*3 + window.innerWidth/10 // Folder 3
 
-    // Hook
-    // function useKeyPress(targetKey) {
-    //     // State for keeping track of whether key is pressed
-    //     // If pressed key is our target key then set to true
-    //     function downHandler({ key }) {
-    //         if (key === targetKey) {
-    //             setKeyPressed(true);
-    //             console.log("PRESSED")
-    //         }
-    //     }
-    //     // If released key is our target key then set to false
-    //     const upHandler = ({ key }) => {
-    //         if (key === targetKey) {
-    //             setKeyPressed(false);
-    //         }
-    //     };
-    //     // Add event listeners
-    //     useEffect(() => {
-    //         window.addEventListener("keydown", downHandler);
-    //         window.addEventListener("keyup", upHandler);
-    //         // Remove event listeners on cleanup
-    //         return () => {
-    //             window.removeEventListener("keydown", downHandler);
-    //             window.removeEventListener("keyup", upHandler);
-    //         };
-    //     }, [keyPressed]); // Empty array ensures that effect is only run on mount and unmount
-    //     return keyPressed;
-    // }
-
-    // State if clicked on file/button, mark as source, second click on folder button add it there using move
-
-    // console.log(window.innerWidth)
-    // console.log(window.innerHeight)
-    let beforeLineBelongsF1 = window.innerWidth/100*80/4 + window.innerWidth/10
-    let beforeLineBelongsF2 = window.innerWidth/100*80/4*2 + window.innerWidth/10
-    let beforeLineBelongsF3 = window.innerWidth/100*80/4*3 + window.innerWidth/10
-
-    // This function calculate X and Y
-    const getPosition = (item_id) => {
-        //const x = boxRef.current.offsetLeft;
-
-        //const y = boxRef.current.offsetTop;
-    };
-
-
-    // Eye Gazing Code
+    // Eye Gazing Code ////////////////////////////////////////////////////////////////////////////////////////////////
     useEffect(()=>{
         const webgazer=window.webgazer
         webgazer.setGazeListener((data,clock)=>{
-           // console.log(data)
-           //  console.log(data.x)
-           //  console.log("Line x")
-           //  console.log(sourceDroppableId)
 
-            // check if key B pressed to allow the dropping process
-            document.addEventListener('keydown', function(event){
-                //console.log(`Key: ${event.key} with keycode ${event.keyCode} has been pressed`);
+        // check if key B pressed to allow the dropping process
+        document.addEventListener('keydown', function(event){
+            //console.log(`Key: ${event.key} with keycode ${event.keyCode} has been pressed`); // Check which code pressed and the keycode
 
-                if (event.keyCode == 66 && sourceDroppableId >= 0 ) { // 32 = space, 66 = b
+            if (event.keyCode == 66 && sourceDroppableId >= 0 ) { // 32 = space, 66 = b
 
-                    // Index = row, droppableId = column = nr folder
-                    // The clicked one solved as source
-                    let source = {droppableId: sourceDroppableId, index: sourceIndex}
-                    console.log("Source saved in result ")
-                    console.log(source)
+                // Index = row, droppableId = column = nr folder
+                // The clicked one solved as source
+                let source = {droppableId: sourceDroppableId, index: sourceIndex}
+                console.log("Source saved in result ")
+                console.log(source)
 
-                    // if folder nr. 1 selected: droppableId = 0
-                    if (data.x < beforeLineBelongsF1){ //&& robotPress
-                        console.log("Selected Folder 1")
-                        let destination = {droppableId: 0, index: state[0].length}
-                        let result = { source, destination }
-                        onDragEnd(result)
-                        // move(state[source], state[0], source, destination) (droppableId)
-                    }
-                    // if folder nr. 2 selected: droppableId = 1
-                    else if (data.x < beforeLineBelongsF2){
-                        console.log("Selected Folder 2")
-                        let destination = {droppableId: 1, index: state[1].length}
-                        let result = { source, destination }
-                        onDragEnd(result)
-                    }
-                    // if folder nr. 3 selected: droppableId = 2
-                    else if (data.x < beforeLineBelongsF3){
-                        console.log("Selected Folder 3")
-                        let destination = {droppableId: 2, index: state[2].length}
-                        let result = { source, destination }
-                        onDragEnd(result)
-                    }
-                    // if folder nr. 4 selected: droppableId = 3
-                    else if (data.x >= beforeLineBelongsF3){
-                        console.log("Selected Folder 4")
-                        let destination = {droppableId: 3, index: state[3].length}
-                        let result = { source, destination }
-                        onDragEnd(result)
-                    }
-
+                // if folder nr. 1 selected: droppableId = 0
+                if (data.x < beforeLineBelongsF1){ //&& robotPress
+                    console.log("Selected Folder 1")
+                    let destination = {droppableId: 0, index: state[0].length}
+                    let result = { source, destination }
+                    onDragEnd(result)
+                    // move(state[source], state[0], source, destination) (droppableId)
                 }
+                // if folder nr. 2 selected: droppableId = 1
+                else if (data.x < beforeLineBelongsF2){
+                    console.log("Selected Folder 2")
+                    let destination = {droppableId: 1, index: state[1].length}
+                    let result = { source, destination }
+                    onDragEnd(result)
+                }
+                // if folder nr. 3 selected: droppableId = 2
+                else if (data.x < beforeLineBelongsF3){
+                    console.log("Selected Folder 3")
+                    let destination = {droppableId: 2, index: state[2].length}
+                    let result = { source, destination }
+                    onDragEnd(result)
+                }
+                // if folder nr. 4 selected: droppableId = 3
+                else if (data.x >= beforeLineBelongsF3){
+                    console.log("Selected Folder 4")
+                    let destination = {droppableId: 3, index: state[3].length}
+                    let result = { source, destination }
+                    onDragEnd(result)
+                }
+
             }
-            )
+        }
+        )
 
 
         }).begin()
@@ -208,19 +146,13 @@ function QuoteApp() {
 
     function onDragEnd(result) {
         const { source, destination } = result;
-        console.log(result)
-        console.log("onDragEnd")
-        console.log(source)
-        console.log(destination)
+
         // dropped outside the list
         if (!destination) {
             return;
         }
         const sInd = +source.droppableId;
         const dInd = +destination.droppableId;
-
-        console.log("sInd in onDragEnd")
-        console.log(sInd)
 
         if (sInd === dInd) {
             const items = reorder(state[sInd], source.index, destination.index);
@@ -241,7 +173,7 @@ function QuoteApp() {
         <div>
             <br></br>
             <br></br>
-            {/* Element to Move Dynamically */}
+            {/* Element to Move Dynamically i.e. when showing the object/item dragged_ */}
             {/*<div*/}
             {/*    style={{*/}
             {/*        position: "absolute",*/}
@@ -307,24 +239,12 @@ function QuoteApp() {
                                                         <button
                                                             type="button"
                                                             onClick={() => {
-                                                                // console.log("Ind: Column")
-                                                                // console.log(index)
+
+                                                                // Send the index=row of the clicked item
                                                                 setsourceIndex(index)
-                                                                //console.log(sourceIndex)
-                                                                //
-                                                                // console.log("Index: Row of item")
-                                                                // console.log(ind)
+
+                                                                // Send the column/folder of the clicked item
                                                                 setsourceDroppableId(ind.toString())
-                                                                // console.log(sourceDroppableId)
-
-                                                                //getPosition(item.id)
-
-                                                                // const newState = [...state];
-                                                                // newState[ind].splice(index, 1);
-                                                                // setState(
-                                                                //     newState.filter(group => group.length)
-                                                                // );
-
                                                             }}
                                                         >
                                                             move
