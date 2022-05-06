@@ -2,6 +2,16 @@ import React, {useEffect, useRef, useState} from "react";
 import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
+/* TODO:
+- do not show every time click on item a new red point/rendering eye gazing again
+- when not looking at the screen, there are no x y coordinates and system crushes...
+
+
+
+ */
+
+
+
 // fake data generator
 const getItems = (count, offset = 0) =>
     Array.from({ length: count }, (v, k) => k).map(k => ({
@@ -145,24 +155,48 @@ function QuoteApp() {
            //  console.log("Line x")
            //  console.log(sourceDroppableId)
 
-            // if key B pressed then allow the dropping process
+            // check if key B pressed to allow the dropping process
             document.addEventListener('keydown', function(event){
-                console.log(`Key: ${event.key} with keycode ${event.keyCode} has been pressed`);
-                if (event.keyCode == 66) { // 32 = space, 66 = b
-                    console.log("space pressed")
+                //console.log(`Key: ${event.key} with keycode ${event.keyCode} has been pressed`);
+
+                if (event.keyCode == 66 && sourceDroppableId >= 0 ) { // 32 = space, 66 = b
+
                     // Index = row, droppableId = column = nr folder
-                    // if folder one selected: droppableId = 0
-                    // Clicked one is saved in  as ind
-                    if (data.x < beforeLineBelongsF1 && sourceDroppableId >= 0 ){ //&& robotPress
-                        console.log("Selected List 1")
-                        let source = {droppableId: sourceDroppableId, index: sourceIndex}
-                        console.log("Source saved in result ")
-                        console.log(source)
+                    // The clicked one solved as source
+                    let source = {droppableId: sourceDroppableId, index: sourceIndex}
+                    console.log("Source saved in result ")
+                    console.log(source)
+
+                    // if folder nr. 1 selected: droppableId = 0
+                    if (data.x < beforeLineBelongsF1){ //&& robotPress
+                        console.log("Selected Folder 1")
                         let destination = {droppableId: 0, index: state[0].length}
                         let result = { source, destination }
                         onDragEnd(result)
                         // move(state[source], state[0], source, destination) (droppableId)
                     }
+                    // if folder nr. 2 selected: droppableId = 1
+                    else if (data.x < beforeLineBelongsF2){
+                        console.log("Selected Folder 2")
+                        let destination = {droppableId: 1, index: state[1].length}
+                        let result = { source, destination }
+                        onDragEnd(result)
+                    }
+                    // if folder nr. 3 selected: droppableId = 2
+                    else if (data.x < beforeLineBelongsF3){
+                        console.log("Selected Folder 3")
+                        let destination = {droppableId: 2, index: state[2].length}
+                        let result = { source, destination }
+                        onDragEnd(result)
+                    }
+                    // if folder nr. 4 selected: droppableId = 3
+                    else if (data.x >= beforeLineBelongsF3){
+                        console.log("Selected Folder 4")
+                        let destination = {droppableId: 3, index: state[3].length}
+                        let result = { source, destination }
+                        onDragEnd(result)
+                    }
+
                 }
             }
             )
