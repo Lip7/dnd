@@ -79,46 +79,46 @@ const getListStyle = isDraggingOver => ({
 });
 
 
-// Hook
-function useKeyPress(targetKey) {
-    // State for keeping track of whether key is pressed
-    const [keyPressed, setKeyPressed] = useState(false);
-    // If pressed key is our target key then set to true
-    function downHandler({ key }) {
-        if (key === targetKey) {
-            setKeyPressed(true);
-            console.log("PRESSED")
-        }
-    }
-    // If released key is our target key then set to false
-    const upHandler = ({ key }) => {
-        if (key === targetKey) {
-            setKeyPressed(false);
-        }
-    };
-    // Add event listeners
-    useEffect(() => {
-        window.addEventListener("keydown", downHandler);
-        window.addEventListener("keyup", upHandler);
-        // Remove event listeners on cleanup
-        return () => {
-            window.removeEventListener("keydown", downHandler);
-            window.removeEventListener("keyup", upHandler);
-        };
-    }, []); // Empty array ensures that effect is only run on mount and unmount
-    return keyPressed;
-}
-
-
 function QuoteApp() {
     const [state, setState] = useState([getItems(10), getItems(5, 10), getItems(5, 15), getItems(5, 20)]);
     let [stateXY, setStateXY] = useState()
+    const [keyPressed, setKeyPressed] = useState(false);
+    const [keyPressed2, setKeyPressed2] = useState(false);
+
 
     //  index: row, droppableId = Column
     const [sourceDroppableId, setsourceDroppableId] = useState(-1)
     const [sourceIndex, setsourceIndex] = useState(-1)
 
-    const robotPress = useKeyPress("b");
+
+    // Hook
+    // function useKeyPress(targetKey) {
+    //     // State for keeping track of whether key is pressed
+    //     // If pressed key is our target key then set to true
+    //     function downHandler({ key }) {
+    //         if (key === targetKey) {
+    //             setKeyPressed(true);
+    //             console.log("PRESSED")
+    //         }
+    //     }
+    //     // If released key is our target key then set to false
+    //     const upHandler = ({ key }) => {
+    //         if (key === targetKey) {
+    //             setKeyPressed(false);
+    //         }
+    //     };
+    //     // Add event listeners
+    //     useEffect(() => {
+    //         window.addEventListener("keydown", downHandler);
+    //         window.addEventListener("keyup", upHandler);
+    //         // Remove event listeners on cleanup
+    //         return () => {
+    //             window.removeEventListener("keydown", downHandler);
+    //             window.removeEventListener("keyup", upHandler);
+    //         };
+    //     }, [keyPressed]); // Empty array ensures that effect is only run on mount and unmount
+    //     return keyPressed;
+    // }
 
     // State if clicked on file/button, mark as source, second click on folder button add it there using move
 
@@ -135,45 +135,42 @@ function QuoteApp() {
         //const y = boxRef.current.offsetTop;
     };
 
-    // // Get the position of the red box in the beginning
-    // useEffect(() => {
-    //    // getPosition();
-    // }, []);
-
-
-    function onClick(){
-
-        // Else Folder 4
-
-    }
 
     // Eye Gazing Code
     useEffect(()=>{
         const webgazer=window.webgazer
         webgazer.setGazeListener((data,clock)=>{
            // console.log(data)
-            console.log(data.x)
-            console.log("Line x")
-            console.log(sourceDroppableId)
+           //  console.log(data.x)
+           //  console.log("Line x")
+           //  console.log(sourceDroppableId)
 
-
-
-
-            // Index = row, droppableId = column = nr folder
-            // if folder one selected: droppableId = 0
-            // Clicked one is saved in  as ind
-            if (data.x < beforeLineBelongsF1 && sourceDroppableId >= 0){
-                console.log("Selected List 1")
-                let source = {droppableId: sourceDroppableId, index: sourceIndex}
-                console.log("Source saved in result ")
-                console.log(source)
-                let destination = {droppableId: 0, index: state[0].length}
-                let result = { source, destination }
-                onDragEnd(result)
-                // move(state[source], state[0], source, destination) (droppableId)
+            // if key B pressed then allow the dropping process
+            document.addEventListener('keydown', function(event){
+                console.log(`Key: ${event.key} with keycode ${event.keyCode} has been pressed`);
+                if (event.keyCode == 66) { // 32 = space, 66 = b
+                    console.log("space pressed")
+                    // Index = row, droppableId = column = nr folder
+                    // if folder one selected: droppableId = 0
+                    // Clicked one is saved in  as ind
+                    if (data.x < beforeLineBelongsF1 && sourceDroppableId >= 0 ){ //&& robotPress
+                        console.log("Selected List 1")
+                        let source = {droppableId: sourceDroppableId, index: sourceIndex}
+                        console.log("Source saved in result ")
+                        console.log(source)
+                        let destination = {droppableId: 0, index: state[0].length}
+                        let result = { source, destination }
+                        onDragEnd(result)
+                        // move(state[source], state[0], source, destination) (droppableId)
+                    }
+                }
             }
+            )
+
+
         }).begin()
     }, [sourceDroppableId]);
+
 
     function onDragEnd(result) {
         const { source, destination } = result;
@@ -276,15 +273,15 @@ function QuoteApp() {
                                                         <button
                                                             type="button"
                                                             onClick={() => {
-                                                                console.log("Ind: Column")
-                                                                console.log(index)
+                                                                // console.log("Ind: Column")
+                                                                // console.log(index)
                                                                 setsourceIndex(index)
-                                                                console.log(sourceIndex)
-
-                                                                console.log("Index: Row of item")
-                                                                console.log(ind)
+                                                                //console.log(sourceIndex)
+                                                                //
+                                                                // console.log("Index: Row of item")
+                                                                // console.log(ind)
                                                                 setsourceDroppableId(ind.toString())
-                                                                console.log(sourceDroppableId)
+                                                                // console.log(sourceDroppableId)
 
                                                                 //getPosition(item.id)
 
