@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="53577b44-0edc-4738-8be7-1283da84c7c7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Login/DnDwithoutGazer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/.cache/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/.eslintcache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Login/Folders.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login/Folders.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,6 +50,9 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\pbuch\Documents\Master\SecondSemester\MMI\thingy-client-purple\src\components\Login" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\pbuch\Documents\Master\SecondSemester\MMI\dnd\src\components\Login" />
     </key>
   </component>
   <component name="RunManager">
@@ -94,7 +99,11 @@
       <workItem from="1651645990186" duration="55238000" />
       <workItem from="1651851382616" duration="6393000" />
       <workItem from="1652467914041" duration="821000" />
-      <workItem from="1652512948817" duration="7919000" />
+      <workItem from="1652512948817" duration="10255000" />
+      <workItem from="1652779827112" duration="2744000" />
+      <workItem from="1652791107132" duration="11188000" />
+      <workItem from="1652860472974" duration="10000" />
+      <workItem from="1652866814252" duration="5624000" />
     </task>
     <servers />
   </component>

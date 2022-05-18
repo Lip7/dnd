@@ -1,8 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import MouseTooltip from 'react-sticky-mouse-tooltip';
-
 
 /* TODO:
 - Show an object at the red point position while moving/selecting the folder
@@ -17,12 +15,7 @@ Info
 
 // global webgazer in order to have only one and saving data in a global value
 const webgazer=window.webgazer
-let dataXY = {x: 0, y: 0}
-let diffXMousePoint = 0
-let diffYMousePoint = 0
-
-
-
+let dataXY
 
 
 // Item in list generator
@@ -85,39 +78,14 @@ const getListStyle = isDraggingOver => ({
 
 });
 
-// const onMouseMove = (e) => {
-//     let rect = e.currentTarget.getBoundingClientRect();
-//     let x = e.clientX - rect.left;
-//     let y = e.clientY - rect.top;
-//
-//     console.log(x, y);
-// };
+
 
 function QuoteApp() {
     const [state, setState] = useState([getItems(10), getItems(5, 10), getItems(5, 15), getItems(5, 20)]);
-    let [showBox, setShowBox] = useState(false)
-    const [showItemName, setItemName] = useState("Item not selected");
+    let [stateXY, setStateXY] = useState()
+    const [keyPressed, setKeyPressed] = useState(false);
     const [keyPressed2, setKeyPressed2] = useState(false);
 
-    const [diffXMousePoint, setDiffXMousePoint] = useState(10)
-
-
-    // const [cursorPosition, setCursorPosition] = useState({ top: 500, left: 500 })
-    // const onMouseMove = e =>
-    //     setCursorPosition({ top: dataXY.y, left: dataXY.x });
-
-    // var pointerX = -1;
-    // var pointerY = -1;
-    // document.onmousemove = function(event) {
-    //     pointerX = event.pageX;
-    //     pointerY = event.pageY;
-    // }
-    // setInterval(pointerCheck, 1000);
-    //
-    // function pointerCheck() {
-    //     console.log('Cursor at: '+pointerX+', '+pointerY);
-    //     //Greeting(dataXY)
-    // }
 
     //  index: row, droppableId = Column
     const [sourceDroppableId, setsourceDroppableId] = useState(-1)
@@ -129,21 +97,15 @@ function QuoteApp() {
     let beforeLineBelongsF3 = window.innerWidth/100*80/4*3 + window.innerWidth/10 // Folder 3
 
     // Eye Gazing Code ////////////////////////////////////////////////////////////////////////////////////////////////
-
     useEffect(()=>{
         // only start the eye gazing once at the beginning until one item was clicked
         if(sourceDroppableId < 0){
             webgazer.setGazeListener((data,clock)=>{
-                //console.log(data)
-				if((typeof data === "null")|| (typeof data === "null")){
-					dataXY = {x: 0, y: 0}
-				}
-				else{
-					 dataXY = data
-                    // setInterval(Greeting(dataXY), 1);
-                }
+                dataXY = data
             }).begin()
+
         }
+
 
         // check if key B pressed to allow the dropping process
         document.addEventListener('keydown', function(event){
@@ -187,31 +149,10 @@ function QuoteApp() {
                     let result = { source, destination }
                     onDragEnd(result)
                 }
-                setShowBox(false)
-
                 //webgazer.resume();
             }
         }
         )
-
-        let update = (e) => {
-            if((typeof dataXY === "null")|| (typeof dataXY === "null")) {
-                setDiffXMousePoint( 0 - e.x)
-                diffYMousePoint = 0 - e.y
-            }
-            else{
-                setDiffXMousePoint((dataXY.x - e.x) * (-1))
-                diffYMousePoint = (dataXY.y - e.y) * (-1)
-                //console.log("Mouse X Diff", diffXMousePoint)
-            }
-
-        }
-        // window.addEventListener('mousemove', update)
-        // //window.removeEventListener('mousemove', update)
-        //
-        // return () => {
-        //     window.removeEventListener('mousemove', update);
-        // };
 
 
 
@@ -241,75 +182,41 @@ function QuoteApp() {
 
             setState(newState.filter(group => group.length));
         }
-
     }
 
+    // Greeting (isDragging, index, ind){
+    //     if(isDragging){
+    //         setsourceIndex(index);
+    //         setsourceDroppableId(ind)
+    //     }
+    // }
 
-
-
-    function UserGreeting(props) {
-        return <h1>Welcome back!</h1>;
-    }
-
-    function GuestGreeting(props) {
-        return <h1>Please sign up.
-            <div style={{position: 'absolute',left: dataXY.x,
-                top: dataXY.y, }} />
-            GeeksforGeeks2222
-        </h1>;
-    }
-
-    function Greeting(props) {
-        // console.log("changed")
-        // const isLoggedIn = props.isLoggedIn;
-        return <h1>Please sign up.
-            <div style={{position: 'absolute',left: props.x,
-                top: props.y, }} />
-            GeeksforGeeks2222
-        </h1>;
-    }
-
-
+    /*function Greeting2(props) {
+        const isDragging = props.isDragging;
+        if (isDragging) {
+            setsourceIndex(props.index);
+            setsourceDroppableId(props.ind)
+        }
+        return <></>;
+    }*/
 
     return (
         <div>
             <br></br>
             <br></br>
-            {/*<Greeting></Greeting>*/}
-            {/*<div onMouseMove={onMouseMove} >*/}
-            {/*    <div style={{position: 'absolute', ...cursorPosition }} />*/}
-            {/*    GeeksforGeeks2222*/}
+            {/* Element to Move Dynamically i.e. when showing the object/item dragged_ */}
+            {/*<div*/}
+            {/*    style={{*/}
+            {/*        position: "absolute",*/}
+            {/*        left: window.innerWidth/100*80/4*3 + window.innerWidth/10,  // In Studysession margin left and right 10%*/}
+            {/*        top: window.innerHeight/2,*/}
+            {/*        background: "lightgrey",*/}
+            {/*        border: '1px solid rgba(0, 0, 0, 10)',*/}
+
+            {/*    }}*/}
+            {/*>*/}
+            {/*    GeeksforGeeks*/}
             {/*</div>*/}
-            {/* snapshot.isDragging ||  Element to Move Dynamically i.e. when showing the object/item dragged_*/}
-            {/*{onMoving &&*/}
-
-            <MouseTooltip
-                visible={showBox}
-                offsetX={15}
-                offsetY={15}
-            >
-            <div
-                // onMouseMove={onMouseMove}
-
-                style={{
-                    position: "absolute",
-                    // left: window.innerWidth/100*80/4*3 + window.innerWidth/10,  // In Studysession margin left and right 10%
-                    // top: window.innerHeight/2,
-                    //left: dataXY.x,
-                    //top: dataXY.y,
-                    background: "grey",
-                    border: '1px solid rgba(0, 0, 0, 10)',
-                    padding: 5,
-
-                }}
-            >
-                {
-                    showItemName
-                }
-            </div>
-            </MouseTooltip>
-
-            {/*}*/}
             <button
                 type="button"
                 onClick={() => {
@@ -356,17 +263,12 @@ function QuoteApp() {
                                                         provided.draggableProps.style
                                                     )}
                                                 >
-                                                    {/*{console.log("dragged item:" + snapshot.isDragging)}*/}
+                                                    {console.log("dragged item:" + snapshot.isDragging)}
                                                     {/*{this.Greeting2(snapshot.isDragging, index, ind.toString())}*/}
                                                     {snapshot.isDragging ? setsourceIndex(index) : ''}
                                                     {snapshot.isDragging ? setsourceDroppableId(ind.toString()) : ''}
-                                                    {snapshot.isDragging ? setShowBox(true) : '' }
-                                                    {snapshot.isDragging ? setItemName(item.id.substr(0, 7) + " selected") : '' }
-
                                                     {console.log(sourceDroppableId, sourceIndex)}
                                                     {/*<Greeting2 isDragging={snapshot.isDragging} index={index} ind = {ind}/>*/}
-
-
 
                                                     <div
                                                         style={{
