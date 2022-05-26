@@ -22,9 +22,6 @@ let diffXMousePoint = 0
 let diffYMousePoint = 0
 
 
-
-
-
 // Item in list generator
 const getItems = (count, offset = 0) =>
     Array.from({ length: count }, (v, k) => k).map(k => ({
@@ -99,7 +96,7 @@ function QuoteApp() {
 
     let [showBox, setShowBox] = useState(false)
     const [showItemName, setItemName] = useState("Item not selected");
-    const [keyPressed2, setKeyPressed2] = useState(false);
+    let [isDragging, setIsDragging] = useState(false);
 
     const [diffXMousePoint, setDiffXMousePoint] = useState(10)
 
@@ -249,8 +246,11 @@ function QuoteApp() {
 
 
 
-    function UserGreeting(props) {
-        return <h1>Welcome back!</h1>;
+    function UserGreeting() {
+        if(isDragging){
+            setState([...state, getItems(1)])
+            setIsDragging(false)
+        }
     }
 
     function GuestGreeting(props) {
@@ -342,7 +342,7 @@ function QuoteApp() {
 
                                     <button
                                         type="button"
-
+                                        onMouseOver={UserGreeting}
                                         onClick={() => {
                                             setState([...state, getItems(1)]);
                                         }}
@@ -374,6 +374,8 @@ function QuoteApp() {
                                                     {snapshot.isDragging ? setsourceDroppableId(ind.toString()) : ''}
                                                     {snapshot.isDragging ? setShowBox(true) : '' }
                                                     {snapshot.isDragging ? setItemName(item.id.substr(0, 7) + " selected") : '' }
+                                                    {snapshot.isDragging ? setIsDragging(true) : false }
+
 
                                                     {console.log(sourceDroppableId, sourceIndex)}
                                                     {/*<Greeting2 isDragging={snapshot.isDragging} index={index} ind = {ind}/>*/}
