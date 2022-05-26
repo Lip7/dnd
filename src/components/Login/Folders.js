@@ -94,7 +94,9 @@ const getListStyle = isDraggingOver => ({
 // };
 
 function QuoteApp() {
-    const [state, setState] = useState([getItems(10), getItems(5, 10), getItems(5, 15), getItems(5, 20)]);
+    const [state, setState] = useState([getItems(10) ]);//, getItems(5, 10), getItems(5, 15), getItems(5, 20)]);
+    const [state2, setState2] = useState([getItems(10) ]);//, getItems(5, 10), getItems(5, 15), getItems(5, 20)]);
+
     let [showBox, setShowBox] = useState(false)
     const [showItemName, setItemName] = useState("Item not selected");
     const [keyPressed2, setKeyPressed2] = useState(false);
@@ -330,14 +332,24 @@ function QuoteApp() {
                 <DragDropContext onDragEnd={onDragEnd}>
                     {state.map((el, ind) => (
                         <Droppable  key={ind} droppableId={`${ind}`}>
+
                             {(provided, snapshot) => (
                                 <div
                                     ref={provided.innerRef}
                                     style={getListStyle(snapshot.isDraggingOver)}
                                     {...provided.droppableProps}
                                 >
-                                    {/*{console.log("IsDraggingOver:" + snapshot.isDraggingOver)}*/}
 
+                                    <button
+                                        type="button"
+
+                                        onClick={() => {
+                                            setState([...state, getItems(1)]);
+                                        }}
+                                    >
+                                        Folder NR. {ind}
+                                    </button>
+                                    {/*{console.log("IsDraggingOver:" + snapshot.isDraggingOver)}*/}
 
                                     {el.map((item, index) => (
                                         <Draggable
@@ -394,7 +406,16 @@ function QuoteApp() {
                                         </Draggable>
                                     ))}
                                     {provided.placeholder}
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setState([...state, getItems(1)]);
+                                        }}
+                                    >
+                                    Folder B
+                                    </button>
                                 </div>
+
                             )}
                         </Droppable>
                     ))}
