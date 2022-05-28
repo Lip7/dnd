@@ -5,9 +5,8 @@ import MouseTooltip from 'react-sticky-mouse-tooltip';
 
 
 /* TODO:
-- Show an object at the red point position while moving/selecting the folder
 - When the user looks at the destination folder, it gets highlighted to improve the selection
-- runs only for 2-3 items fast, afterwards it gets slowly/lags
+- show word logo in items and folder image on folder
 - if move item 1 from folder 1 and then want to move item 2 from folder 1 (same start folder), it moves still item 1
 
 Info
@@ -96,7 +95,7 @@ function QuoteApp() {
 
     let [showBox, setShowBox] = useState(false)
     const [showItemName, setItemName] = useState("Item not selected");
-    let [isDragging, setIsDragging] = useState(false);
+    let [isDraggingOverFolder, setIsDragging] = useState(false);
 
     const [diffXMousePoint, setDiffXMousePoint] = useState(10)
 
@@ -246,9 +245,9 @@ function QuoteApp() {
 
 
 
-    function UserGreeting() {
-        if(isDragging){
-            setState([...state, getItems(1)])
+    async function UserGreeting()  {
+        if(isDraggingOverFolder){
+            await setState([...state, getItems(5)])
             setIsDragging(false)
         }
     }
@@ -312,22 +311,22 @@ function QuoteApp() {
             </MouseTooltip>
 
             {/*}*/}
-            <button
-                type="button"
-                onClick={() => {
-                    setState([...state, []]);
-                }}
-            >
-                Add new Folder
-            </button>
-            <button
-                type="button"
-                onClick={() => {
-                    setState([...state, getItems(1)]);
-                }}
-            >
-                Add new File
-            </button>
+            {/*<button*/}
+            {/*    type="button"*/}
+            {/*    onClick={() => {*/}
+            {/*        setState([...state, []]);*/}
+            {/*    }}*/}
+            {/*>*/}
+            {/*    Add new Folder*/}
+            {/*</button>*/}
+            {/*<button*/}
+            {/*    type="button"*/}
+            {/*    onClick={() => {*/}
+            {/*        setState([...state, getItems(1)]);*/}
+            {/*    }}*/}
+            {/*>*/}
+            {/*    Add new File*/}
+            {/*</button>*/}
             <div style={{ display: "flex" }}>
                 <DragDropContext onDragEnd={onDragEnd}>
                     {state.map((el, ind) => (
@@ -342,9 +341,16 @@ function QuoteApp() {
 
                                     <button
                                         type="button"
-                                        onMouseOver={UserGreeting}
+                                        style={{
+                                            maxWidth: "285px",
+                                            maxHeight: "50px",
+                                            minWidth: "285px",
+                                            minHeight: "50px",
+                                            marginBottom: "8px"
+                                        }}
+                                    onMouseOver={UserGreeting}
                                         onClick={() => {
-                                            setState([...state, getItems(1)]);
+                                            setState([...state, getItems(5)]);
                                         }}
                                     >
                                         Folder NR. {ind}
@@ -389,19 +395,19 @@ function QuoteApp() {
                                                         }}
                                                     >
                                                         {item.content}
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => {
+                                                        {/*<button*/}
+                                                        {/*    type="button"*/}
+                                                        {/*    onClick={() => {*/}
 
-                                                                // Send the index=row of the clicked item
-                                                                setsourceIndex(index)
+                                                        {/*        // Send the index=row of the clicked item*/}
+                                                        {/*        setsourceIndex(index)*/}
 
-                                                                // Send the column/folder of the clicked item
-                                                                setsourceDroppableId(ind.toString())
-                                                            }}
-                                                        >
-                                                            move
-                                                        </button>
+                                                        {/*        // Send the column/folder of the clicked item*/}
+                                                        {/*        setsourceDroppableId(ind.toString())*/}
+                                                        {/*    }}*/}
+                                                        {/*>*/}
+                                                        {/*    move*/}
+                                                        {/*</button>*/}
                                                     </div>
                                                 </div>
                                             )}
@@ -412,6 +418,13 @@ function QuoteApp() {
                                         type="button"
                                         onClick={() => {
                                             setState([...state, getItems(1)]);
+                                        }}
+                                        onMouseOver={UserGreeting}
+                                        style={{
+                                            maxWidth: "285px",
+                                            maxHeight: "50px",
+                                            minWidth: "285px",
+                                            minHeight: "50px"
                                         }}
                                     >
                                     Folder B
