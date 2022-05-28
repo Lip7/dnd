@@ -2,11 +2,17 @@ import React, {useEffect, useRef, useState} from "react";
 import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import MouseTooltip from 'react-sticky-mouse-tooltip';
+import './button.css';
+
+import word from './word.png'; // with import
+import folderImage from './folderImage.png'; // with import
+
 
 
 /* TODO:
 - When the user looks at the destination folder, it gets highlighted to improve the selection
-- show word logo in items and folder image on folder
+- add log
+- show selected folder only for second test and also disable hover
 - if move item 1 from folder 1 and then want to move item 2 from folder 1 (same start folder), it moves still item 1
 
 Info
@@ -19,6 +25,8 @@ const webgazer=window.webgazer
 let dataXY = {x: 0, y: 0}
 let diffXMousePoint = 0
 let diffYMousePoint = 0
+let FolderPath = "HOME/DOCUMENTS/"
+let startTime
 
 
 // Item in list generator
@@ -60,9 +68,10 @@ const getItemStyle = (isDragging, draggableStyle) => ({
     userSelect: "none",
     padding: grid * 2,
     margin: `0 0 ${grid}px 0`,
+        maxWidth: "100px",
 
     // change background colour if dragging
-    background: isDragging ? "lightgreen" : "grey",
+    background: isDragging ? "lightgreen" : "white",
 
     // styles we need to apply on draggables
     ...draggableStyle
@@ -70,27 +79,19 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 
 // Style of the Folders (Here change to activate the folders/list when user selects the destination folder???)
 const getListStyle = isDraggingOver => ({
-    background: isDraggingOver ? "lightblue" : "lightgrey",
+    background: isDraggingOver ? "lightblue" : "white",
     padding: grid,
     border: '1px solid rgba(0, 0, 0, 10)',
     width: 250,
     flex:1,
     flexDirection:'row',
-    alignItems:'center',
-    justifyContent:'center'
+    alignItems:'left',
+    justifyContent:'left'
 
 });
 
-// const onMouseMove = (e) => {
-//     let rect = e.currentTarget.getBoundingClientRect();
-//     let x = e.clientX - rect.left;
-//     let y = e.clientY - rect.top;
-//
-//     console.log(x, y);
-// };
-
 function QuoteApp() {
-    const [state, setState] = useState([getItems(10) ]);//, getItems(5, 10), getItems(5, 15), getItems(5, 20)]);
+    const [state, setState] = useState([getItems(5) ]);//, getItems(5, 10), getItems(5, 15), getItems(5, 20)]);
     const [state2, setState2] = useState([getItems(10) ]);//, getItems(5, 10), getItems(5, 15), getItems(5, 20)]);
 
     let [showBox, setShowBox] = useState(false)
@@ -99,23 +100,6 @@ function QuoteApp() {
 
     const [diffXMousePoint, setDiffXMousePoint] = useState(10)
 
-
-    // const [cursorPosition, setCursorPosition] = useState({ top: 500, left: 500 })
-    // const onMouseMove = e =>
-    //     setCursorPosition({ top: dataXY.y, left: dataXY.x });
-
-    // var pointerX = -1;
-    // var pointerY = -1;
-    // document.onmousemove = function(event) {
-    //     pointerX = event.pageX;
-    //     pointerY = event.pageY;
-    // }
-    // setInterval(pointerCheck, 1000);
-    //
-    // function pointerCheck() {
-    //     console.log('Cursor at: '+pointerX+', '+pointerY);
-    //     //Greeting(dataXY)
-    // }
 
     //  index: row, droppableId = Column
     const [sourceDroppableId, setsourceDroppableId] = useState(-1)
@@ -153,12 +137,12 @@ function QuoteApp() {
                 // Index = row, droppableId = column = nr folder
                 // The clicked one solved as source
                 let source = {droppableId: sourceDroppableId, index: sourceIndex}
-                console.log("Source saved in result ")
-                console.log(source)
+                // console.log("Source saved in result ")
+                // console.log(source)
 
                 // if folder nr. 1 selected: droppableId = 0
                 if (dataXY.x < beforeLineBelongsF1){ //&& robotPress
-                    console.log("Selected Folder 1")
+                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 1")
                     let destination = {droppableId: 0, index: state[0].length}
                     let result = { source, destination }
                     onDragEnd(result)
@@ -166,21 +150,21 @@ function QuoteApp() {
                 }
                 // if folder nr. 2 selected: droppableId = 1
                 else if (dataXY.x < beforeLineBelongsF2){
-                    console.log("Selected Folder 2")
+                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 2")
                     let destination = {droppableId: 1, index: state[1].length}
                     let result = { source, destination }
                     onDragEnd(result)
                 }
                 // if folder nr. 3 selected: droppableId = 2
                 else if (dataXY.x < beforeLineBelongsF3){
-                    console.log("Selected Folder 3")
+                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 3")
                     let destination = {droppableId: 2, index: state[2].length}
                     let result = { source, destination }
                     onDragEnd(result)
                 }
                 // if folder nr. 4 selected: droppableId = 3
                 else if (dataXY.x >= beforeLineBelongsF3){
-                    console.log("Selected Folder 4")
+                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 4")
                     let destination = {droppableId: 3, index: state[3].length}
                     let result = { source, destination }
                     onDragEnd(result)
@@ -204,14 +188,6 @@ function QuoteApp() {
             }
 
         }
-        // window.addEventListener('mousemove', update)
-        // //window.removeEventListener('mousemove', update)
-        //
-        // return () => {
-        //     window.removeEventListener('mousemove', update);
-        // };
-
-
 
     }, [sourceDroppableId]);
 
@@ -242,13 +218,12 @@ function QuoteApp() {
 
     }
 
-
-
-
+    // To enable hovering over folder and opening/adding new folder to the right
     async function UserGreeting()  {
         if(isDraggingOverFolder){
-            await setState([...state, getItems(5)])
+            await setState([...state, getItems(sourceIndex+1, 0)])
             setIsDragging(false)
+            console.log("Dragged Item and Hovered over folder Nr. ")
         }
     }
 
@@ -274,15 +249,17 @@ function QuoteApp() {
 
     return (
         <div>
+            <p>Thank you for taking your time. Here is the first task with the goal to move the item 2 to the folder 2. Please read it carefully before you start and then click on START FIRST TEST</p>
+            <p>2. Drag and Drop the new item 2 into the folder zero by dragging it over the folder zero</p>
+            <p>3. Drag and Drop the new item 2 into the folder one BELOW</p>
+            <p>4. Drag and Drop the new item 2 into the folder two</p>
+            <br></br>
+            <button>START TEST 1</button>
+            <button>END TEST 1</button>
+
             <br></br>
             <br></br>
-            {/*<Greeting></Greeting>*/}
-            {/*<div onMouseMove={onMouseMove} >*/}
-            {/*    <div style={{position: 'absolute', ...cursorPosition }} />*/}
-            {/*    GeeksforGeeks2222*/}
-            {/*</div>*/}
-            {/* snapshot.isDragging ||  Element to Move Dynamically i.e. when showing the object/item dragged_*/}
-            {/*{onMoving &&*/}
+
 
             <MouseTooltip
                 visible={showBox}
@@ -337,25 +314,40 @@ function QuoteApp() {
                                     ref={provided.innerRef}
                                     style={getListStyle(snapshot.isDraggingOver)}
                                     {...provided.droppableProps}
+                                    align="left"
                                 >
-
+                                    <p>
+                                        <b>Folder NR. {ind-1} </b>
+                                         {/*HOME\DOCUMENTS\Folder NR.*/}
+                                    </p>
+                                    <br></br>
                                     <button
+                                        // className="button_content"
                                         type="button"
-                                        style={{
-                                            maxWidth: "285px",
-                                            maxHeight: "50px",
-                                            minWidth: "285px",
-                                            minHeight: "50px",
-                                            marginBottom: "8px"
-                                        }}
-                                    onMouseOver={UserGreeting}
+                                        // style={{
+                                        //     maxWidth: "285px",
+                                        //     maxHeight: "50px",
+                                        //     minWidth: "285px",
+                                        //     minHeight: "50px",
+                                        //     marginBottom: "8px"
+                                        // }}
+                                        onMouseOver={UserGreeting}
                                         onClick={() => {
                                             setState([...state, getItems(5)]);
+                                            console.log("Second Test: Clicked on Folder Nr. " + (ind-1))
+                                            // {FolderPath = FolderPath + "Folder NR." +  {ind} + "/"}
                                         }}
                                     >
-                                        Folder NR. {ind}
+                                        <div className='rowC'>
+                                            <img  src={folderImage} width="50" height="50"/>
+                                            <div
+                                                style={{ marginTop: "20px", marginRight: "5px" }}
+                                            >
+                                                Folder NR. {ind} </div>
+                                        </div>
+
                                     </button>
-                                    {/*{console.log("IsDraggingOver:" + snapshot.isDraggingOver)}*/}
+
 
                                     {el.map((item, index) => (
                                         <Draggable
@@ -366,7 +358,8 @@ function QuoteApp() {
 
                                             {(provided, snapshot) => (
                                                 <div
-                                                    ref={provided.innerRef}
+
+                                                ref={provided.innerRef}
                                                     {...provided.draggableProps}
                                                     {...provided.dragHandleProps}
                                                     style={getItemStyle(
@@ -374,6 +367,12 @@ function QuoteApp() {
                                                         provided.draggableProps.style
                                                     )}
                                                 >
+                                                    <div>
+                                                    <img src={word} width="20" height="20"/>
+                                                    {" " + item.content}
+                                                    </div>
+
+
                                                     {/*{console.log("dragged item:" + snapshot.isDragging)}*/}
                                                     {/*{this.Greeting2(snapshot.isDragging, index, ind.toString())}*/}
                                                     {snapshot.isDragging ? setsourceIndex(index) : ''}
@@ -382,11 +381,8 @@ function QuoteApp() {
                                                     {snapshot.isDragging ? setItemName(item.id.substr(0, 7) + " selected") : '' }
                                                     {snapshot.isDragging ? setIsDragging(true) : false }
 
-
-                                                    {console.log(sourceDroppableId, sourceIndex)}
+                                                    {console.log("Is dragging item " + sourceIndex  + " from Folder Nr " + (sourceDroppableId-1) )}
                                                     {/*<Greeting2 isDragging={snapshot.isDragging} index={index} ind = {ind}/>*/}
-
-
 
                                                     <div
                                                         style={{
@@ -394,7 +390,6 @@ function QuoteApp() {
                                                             justifyContent: "space-around"
                                                         }}
                                                     >
-                                                        {item.content}
                                                         {/*<button*/}
                                                         {/*    type="button"*/}
                                                         {/*    onClick={() => {*/}
@@ -415,19 +410,28 @@ function QuoteApp() {
                                     ))}
                                     {provided.placeholder}
                                     <button
+                                        // className="button_content"
                                         type="button"
-                                        onClick={() => {
-                                            setState([...state, getItems(1)]);
-                                        }}
+                                        // style={{
+                                        //     maxWidth: "285px",
+                                        //     maxHeight: "50px",
+                                        //     minWidth: "285px",
+                                        //     minHeight: "50px",
+                                        //     marginBottom: "8px"
+                                        // }}
                                         onMouseOver={UserGreeting}
-                                        style={{
-                                            maxWidth: "285px",
-                                            maxHeight: "50px",
-                                            minWidth: "285px",
-                                            minHeight: "50px"
+                                        onClick={() => {
+                                            setState([...state, getItems(5)]);
                                         }}
                                     >
-                                    Folder B
+                                        <div className='rowC'>
+                                            <img  src={folderImage} width="50" height="50"/>
+                                            <div
+                                                style={{ marginTop: "20px", marginRight: "5px" }}
+                                            >
+                                                Folder NR. 1 </div>
+                                        </div>
+
                                     </button>
                                 </div>
 
