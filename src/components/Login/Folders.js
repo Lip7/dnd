@@ -137,6 +137,9 @@ function QuoteApp() {
     const [diffXMousePoint, setDiffXMousePoint] = useState(10)
 
     let [disable, setDisable] = React.useState(false);
+    let [disableFinish, setDisableFinish] = React.useState(false);
+
+
     let [startTime2, setStartTime] = useState(0)
 
 
@@ -310,7 +313,7 @@ function QuoteApp() {
         <div>
         <div  style={{ color: "lightgreen" }}>
             <p>Thank you for taking your time. Here is the first task with the goal to move the item 2 to the folder 2.
-                Please read it carefully before you start and then click on START TEST 1</p>
+                Please read it carefully before you start</p>
             <form>
                 <label>
                     1. Enter your Name:
@@ -319,9 +322,14 @@ function QuoteApp() {
                     />
                 </label>
             </form>
-            <p>2. Drag and Drop the new item 2 into the folder 0 by dragging it over the folder 0</p>
+            <p>2. Click on START TEST 1 and Drag and Drop the new item 2 into the folder 0 by dragging it over the folder 0</p>
             <p>3. Drag and Drop the new item 2 into the BELOW folder 1 </p>
             <p>4. Drag and Drop the new item 2 into the folder 2</p>
+            <p>5. Stop the test by pressing on the END TEST 1 Button</p>
+            <p>6. Right Click with the mouse on the website and click on inspect</p>
+            <p>7. Go to CONSOLE and make a screenshot of the output and save it in order that you can later upload it on the google form after the second task.</p>
+            <p>8. Do the eye gazer test 2 by clicking on <a>https://drag-and-drop-c9785.web.app/gazer</a></p>
+
             <br></br>
             <button
                 disabled={disable}
@@ -330,7 +338,18 @@ function QuoteApp() {
                     setDisable(true)
                 }}
             >START TEST 1</button>
-            <button>END TEST 1</button>
+
+            {disable &&
+            <button
+                disabled={disableFinish}
+                onClick={() => {
+                    let endTestTime1 = performance.now()
+                    console.log("Finished Test 1 and used: " + (endTestTime1-startTestTime))
+                    //setDisable(false)
+                    setDisableFinish(true)
+
+                }}>
+                END TEST 1</button> }
         </div>
             <br></br>
             <br></br>
