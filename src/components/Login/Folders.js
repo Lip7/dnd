@@ -27,6 +27,15 @@ let diffXMousePoint = 0
 let diffYMousePoint = 0
 let FolderPath = "HOME/DOCUMENTS/"
 let startTime
+let endTime
+let totalTimeTest1 = 0 // and two
+
+let startTestTime
+
+let numberTimesClickedFolder = 0
+let startTimeClickedFolder1
+let endTimeClickedFolder2
+let totalTimeClickingFolders = 0
 
 
 // Item in list generator
@@ -100,6 +109,9 @@ function QuoteApp() {
 
     const [diffXMousePoint, setDiffXMousePoint] = useState(10)
 
+    let [disable, setDisable] = React.useState(false);
+    let [startTime2, setStartTime] = useState(0)
+
 
     //  index: row, droppableId = Column
     const [sourceDroppableId, setsourceDroppableId] = useState(-1)
@@ -142,7 +154,7 @@ function QuoteApp() {
 
                 // if folder nr. 1 selected: droppableId = 0
                 if (dataXY.x < beforeLineBelongsF1){ //&& robotPress
-                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 1")
+                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 0")
                     let destination = {droppableId: 0, index: state[0].length}
                     let result = { source, destination }
                     onDragEnd(result)
@@ -150,26 +162,32 @@ function QuoteApp() {
                 }
                 // if folder nr. 2 selected: droppableId = 1
                 else if (dataXY.x < beforeLineBelongsF2){
-                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 2")
+                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 1")
                     let destination = {droppableId: 1, index: state[1].length}
                     let result = { source, destination }
                     onDragEnd(result)
                 }
                 // if folder nr. 3 selected: droppableId = 2
                 else if (dataXY.x < beforeLineBelongsF3){
-                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 3")
+                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 2")
                     let destination = {droppableId: 2, index: state[2].length}
                     let result = { source, destination }
                     onDragEnd(result)
                 }
                 // if folder nr. 4 selected: droppableId = 3
                 else if (dataXY.x >= beforeLineBelongsF3){
-                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 4")
+                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 3")
                     let destination = {droppableId: 3, index: state[3].length}
                     let result = { source, destination }
                     onDragEnd(result)
                 }
                 setShowBox(false)
+
+                endTime = performance.now()
+                let usedTime = (endTime - startTime)
+                console.log("Test 2: Dragged Item and used Eye Gazer and had: " + usedTime + " milliseconds")
+                totalTimeTest1 = totalTimeClickingFolders + usedTime
+                console.log("Totally used time for test 2: " + totalTimeTest1)
 
                 //webgazer.resume();
             }
@@ -223,8 +241,17 @@ function QuoteApp() {
         if(isDraggingOverFolder){
             await setState([...state, getItems(sourceIndex+1, 0)])
             setIsDragging(false)
-            console.log("Dragged Item and Hovered over folder Nr. ")
+            endTime = performance.now()
+            let usedTime = (endTime - startTime)
+            console.log("Dragged Item and Hovered over folder and had: " + usedTime + " milliseconds")
+            totalTimeTest1 = totalTimeTest1 + usedTime
+            console.log("Totally used time for test 1: " + totalTimeTest1)
         }
+    }
+
+    function MeasureTime()  {
+        startTime = performance.now()
+        return <></>
     }
 
     function GuestGreeting(props) {
@@ -245,16 +272,34 @@ function QuoteApp() {
         </h1>;
     }
 
+    const handleMobile=(text)=>{
+        console.log(text);
+    }
+
 
 
     return (
         <div>
             <p>Thank you for taking your time. Here is the first task with the goal to move the item 2 to the folder 2. Please read it carefully before you start and then click on START FIRST TEST</p>
+            <form>
+                <label>
+                    1. Enter your Name:
+
+                    <input type="text" name="name" onChange={(event)=>{handleMobile(event.target.value)}}   onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
+                    />
+                </label>
+            </form>
             <p>2. Drag and Drop the new item 2 into the folder zero by dragging it over the folder zero</p>
             <p>3. Drag and Drop the new item 2 into the folder one BELOW</p>
             <p>4. Drag and Drop the new item 2 into the folder two</p>
             <br></br>
-            <button>START TEST 1</button>
+            <button
+                disabled={disable}
+                onClick={() => {
+                    startTestTime = performance.now()
+                    setDisable(true)
+                }}
+            >START TEST 1</button>
             <button>END TEST 1</button>
 
             <br></br>
@@ -334,7 +379,16 @@ function QuoteApp() {
                                         onMouseOver={UserGreeting}
                                         onClick={() => {
                                             setState([...state, getItems(5)]);
-                                            console.log("Second Test: Clicked on Folder Nr. " + (ind-1))
+                                            numberTimesClickedFolder = numberTimesClickedFolder + 1
+                                            console.log("Second Test: Clicked on Folder Nr. " + (ind))
+
+                                            if (numberTimesClickedFolder === 1){
+                                                startTimeClickedFolder1 = performance.now()
+                                            } else if (numberTimesClickedFolder === 3){
+                                                endTimeClickedFolder2 = performance.now()
+                                                totalTimeClickingFolders = endTimeClickedFolder2-startTimeClickedFolder1
+                                                console.log("Test 2: Used time to click/open three folders: " + (totalTimeClickingFolders))
+                                            }
                                             // {FolderPath = FolderPath + "Folder NR." +  {ind} + "/"}
                                         }}
                                     >
@@ -380,9 +434,12 @@ function QuoteApp() {
                                                     {snapshot.isDragging ? setShowBox(true) : '' }
                                                     {snapshot.isDragging ? setItemName(item.id.substr(0, 7) + " selected") : '' }
                                                     {snapshot.isDragging ? setIsDragging(true) : false }
+                                                    <div style={{ color: "lightgreen" }}>{snapshot.isDragging ? (startTime = performance.now()) : ""  }</div>
+                                                    {/*{snapshot.isDragging ? setStartTime(performance.now()) : ''}*/}
 
-                                                    {console.log("Is dragging item " + sourceIndex  + " from Folder Nr " + (sourceDroppableId-1) )}
-                                                    {/*<Greeting2 isDragging={snapshot.isDragging} index={index} ind = {ind}/>*/}
+
+                                                    {sourceIndex > 0 ? (console.log("Is dragging item " + sourceIndex  + " from Folder Nr " + (sourceDroppableId-1) + " and started: " + startTime)) : ""}
+
 
                                                     <div
                                                         style={{
@@ -422,7 +479,16 @@ function QuoteApp() {
                                         onMouseOver={UserGreeting}
                                         onClick={() => {
                                             setState([...state, getItems(5)]);
-                                        }}
+                                            numberTimesClickedFolder = numberTimesClickedFolder + 1
+                                            console.log("Second Test: Clicked on Folder Nr. 1 BELOW")
+
+                                            if (numberTimesClickedFolder === 1){
+                                                startTimeClickedFolder1 = performance.now()
+                                            } else if (numberTimesClickedFolder === 3){
+                                                endTimeClickedFolder2 = performance.now()
+                                                totalTimeClickingFolders = endTimeClickedFolder2-startTimeClickedFolder1
+                                                console.log("Test 2: Used time to click/open three folders: " + (totalTimeClickingFolders))
+                                            }                                        }}
                                     >
                                         <div className='rowC'>
                                             <img  src={folderImage} width="50" height="50"/>
