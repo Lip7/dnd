@@ -7,6 +7,33 @@ import './button.css';
 import word from './word.png'; // with import
 import folderImage from './folderImage.png'; // with import
 
+// require("firebase-functions/lib/logger/compat");
+//
+// const functions = require("firebase-functions");
+//
+//
+// functions.logger.log("Hello from info. Here's an object:");
+
+// // get the Console class
+// const { Console } = require("console");
+// // get fs module for creating write streams
+// const fs = require("fs");
+//
+// // make a new logger
+// const myLogger = new Console({
+//     stdout: fs.createWriteStream("normalStdout.txt"),
+//     stderr: fs.createWriteStream("errStdErr.txt"),
+// });
+
+// let fs = require('fs')
+// let logger = fs.createWriteStream('log.txt', {
+//     flags: 'a' // 'a' means appending (old data will be preserved)
+// })
+//
+// logger.write('some data') // append string to your file
+// logger.write('more data') // again
+// logger.write('and more') // again
+
 
 
 /* TODO:
@@ -247,6 +274,7 @@ function QuoteApp() {
             totalTimeTest1 = totalTimeTest1 + usedTime
             console.log("Totally used time for test 1: " + totalTimeTest1)
         }
+
     }
 
     function MeasureTime()  {
@@ -280,7 +308,9 @@ function QuoteApp() {
 
     return (
         <div>
-            <p>Thank you for taking your time. Here is the first task with the goal to move the item 2 to the folder 2. Please read it carefully before you start and then click on START FIRST TEST</p>
+        <div  style={{ color: "lightgreen" }}>
+            <p>Thank you for taking your time. Here is the first task with the goal to move the item 2 to the folder 2.
+                Please read it carefully before you start and then click on START TEST 1</p>
             <form>
                 <label>
                     1. Enter your Name:
@@ -289,9 +319,9 @@ function QuoteApp() {
                     />
                 </label>
             </form>
-            <p>2. Drag and Drop the new item 2 into the folder zero by dragging it over the folder zero</p>
-            <p>3. Drag and Drop the new item 2 into the folder one BELOW</p>
-            <p>4. Drag and Drop the new item 2 into the folder two</p>
+            <p>2. Drag and Drop the new item 2 into the folder 0 by dragging it over the folder 0</p>
+            <p>3. Drag and Drop the new item 2 into the BELOW folder 1 </p>
+            <p>4. Drag and Drop the new item 2 into the folder 2</p>
             <br></br>
             <button
                 disabled={disable}
@@ -301,7 +331,7 @@ function QuoteApp() {
                 }}
             >START TEST 1</button>
             <button>END TEST 1</button>
-
+        </div>
             <br></br>
             <br></br>
 
@@ -431,14 +461,15 @@ function QuoteApp() {
                                                     {/*{this.Greeting2(snapshot.isDragging, index, ind.toString())}*/}
                                                     {snapshot.isDragging ? setsourceIndex(index) : ''}
                                                     {snapshot.isDragging ? setsourceDroppableId(ind.toString()) : ''}
-                                                    {snapshot.isDragging ? setShowBox(true) : '' }
+
                                                     {snapshot.isDragging ? setItemName(item.id.substr(0, 7) + " selected") : '' }
-                                                    {snapshot.isDragging ? setIsDragging(true) : false }
                                                     <div style={{ color: "lightgreen" }}>{snapshot.isDragging ? (startTime = performance.now()) : ""  }</div>
                                                     {/*{snapshot.isDragging ? setStartTime(performance.now()) : ''}*/}
 
+                                                    {(sourceIndex > 0 && !isDraggingOverFolder) ? (console.log("Is dragging item " + sourceIndex  + " from Folder Nr " + (sourceDroppableId-1) + " and started: " + startTime)) : ""}
+                                                    {snapshot.isDragging ? setShowBox(true) : '' }
+                                                    {snapshot.isDragging ? setIsDragging(true) : false }
 
-                                                    {sourceIndex > 0 ? (console.log("Is dragging item " + sourceIndex  + " from Folder Nr " + (sourceDroppableId-1) + " and started: " + startTime)) : ""}
 
 
                                                     <div
