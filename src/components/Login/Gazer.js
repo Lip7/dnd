@@ -109,6 +109,8 @@ function QuoteApp() {
     let [disable, setDisable] = React.useState(false);
     let [disableFinish, setDisableFinish] = React.useState(false);
 
+    let [myArray, setMyArray] = useState(["HOME"]);
+
 
     //  index: row, droppableId = Column
     const [sourceDroppableId, setsourceDroppableId] = useState(-1)
@@ -292,10 +294,10 @@ function QuoteApp() {
             <br></br>
 
             <p>Make sure you look in your camera and a green frame is around your face.</p>
-            <p>Calibrate the eye gazer (red dot) by looking at the first upper corner on the left (above Folder Nr. -1) and going with the mouse there clicking 5 times with the mouse the corner.
-               <p>Then move simultaneously with the mouse and your eyes to the upper right corner and click 5 times with the mouse the corner. </p>
-                Then go to the under right corner and click 5 times with the mouse the corner. Finally, go to the under left corner
-                and do the same. Repeat all one more time.</p>
+            <p>Calibrate the eye gazer (red dot): by moving with the mouse to the first upper corner on the left (above the PATH HOME) while looking at the mouse movement.
+                <p> and clicking 5 times with the mouse on the left corner.</p>
+               <p>Then move simultaneously with the mouse and your eyes to the upper right corner and click 5 times with the mouse on this corner. </p>
+                Then go to the under right corner and click it again 5 times with the mouse. Finally, go to the under left corner and do the same. Repeat the calibration one more time.</p>
             <br></br>
 
             <form>
@@ -307,15 +309,15 @@ function QuoteApp() {
                 </label>
             </form>
 
-            <p>2. Click on START TEST 2 and go to the folder NR. 2 by clicking on the folders: Folder NR. 0 -> Folder NR. 1 (BELOW) -> Folder NR. 2</p>
-            <p>3. Select the item 2 by dragging it shortly. Look with the red dot to the folder NR. 2 and click on b when the red dot is inside this folder. The item 2 will be added to this folder</p>
+            <p>2. Click on START TEST 2 and go to the folder NR. 6 by clicking on the folders (upper folder, below one, upper one, below one and so on): Folder NR. 0 -> folder nr. 1 (BELOW) -> Folder NR. 2 -> folder nr. 3 and so on</p>
+            <p>3. Select the item 2 by dragging it shortly. Look with the red dot to the folder NR. 6 and click on the key <b>b</b> when the red dot is inside this folder. The item 2 will be added to this folder</p>
             <p>4. Stop the test 2 by pressing on the END TEST 2 Button</p>
             <br></br>
             {disableFinish && <p>
                 <p>5. Right Click with the mouse on the website and click on inspect to go to CONSOLE OR</p>
                 <p>To open the developer console window on Chrome, use the keyboard shortcut Control-Shift-J on Windows or Cmd-Option-J on a Mac</p>
-                <p>6. Make a screenshot of the output in the console and save it in order that you can later upload it on the google form below. </p>
-                <p>7. Please fill out and the upload the screenshots on the <a className='a' target="_blank" href={"https://forms.gle/Eb6fKaZYjue3V2Pw5"}> google form</a> </p>
+                <p>6. Make a screenshot of your whole screen including the output in the console and save it in order that you can later upload it on the google form below. </p>
+                <p>7. Please fill out and the upload the screenshots in the <a className='a' target="_blank" href={"https://forms.gle/Eb6fKaZYjue3V2Pw5"}> google form</a> </p>
             </p>  }
             <br></br>
             <button
@@ -341,18 +343,18 @@ function QuoteApp() {
             <br></br>
             <br></br>
 
-            <div
-                style={{
-                    position: "absolute",
-                    left: beforeLineBelongsF2,  // In Studysession margin left and right 10%
-                    top: window.innerHeight/2,
-                    background: "lightgrey",
-                    border: '1px solid rgba(0, 0, 0, 10)',
+            {/*<div*/}
+            {/*    style={{*/}
+            {/*        position: "absolute",*/}
+            {/*        left: beforeLineBelongsF2,  // In Studysession margin left and right 10%*/}
+            {/*        top: window.innerHeight/2,*/}
+            {/*        background: "lightgrey",*/}
+            {/*        border: '1px solid rgba(0, 0, 0, 10)',*/}
 
-                }}
-            >
-                GeeksforGeeks
-            </div>
+            {/*    }}*/}
+            {/*>*/}
+            {/*    GeeksforGeeks*/}
+            {/*</div>*/}
 
             <MouseTooltip
                 visible={showBox}
@@ -389,7 +391,8 @@ function QuoteApp() {
                                     align="left"
                                 >
                                     <p>
-                                        <b>Folder NR. {ind-1} </b>
+                                        <b> {myArray[ind]} </b>
+                                        {/*Folder NR. {ind-1}*/}
                                          {/*HOME\DOCUMENTS\Folder NR.*/}
                                     </p>
                                     <br></br>
@@ -408,9 +411,12 @@ function QuoteApp() {
                                             numberTimesClickedFolder = numberTimesClickedFolder + 1
                                             console.log("Second Test: Clicked on Folder Nr. " + (ind))
 
+                                            let nextArray = myArray[ind] + "/" + (ind)
+                                            setMyArray(oldArray => [...oldArray, nextArray])
+
                                             if (numberTimesClickedFolder === 1){
                                                 startTimeClickedFolder1 = performance.now()
-                                            } else if (numberTimesClickedFolder === 3){
+                                            } else if (numberTimesClickedFolder === 7){
                                                 endTimeClickedFolder2 = performance.now()
                                                 totalTimeClickingFolders = endTimeClickedFolder2-startTimeClickedFolder1
                                                 console.log("Test 2: Used time to click/open three folders: " + (totalTimeClickingFolders))
@@ -490,6 +496,9 @@ function QuoteApp() {
                                             numberTimesClickedFolder = numberTimesClickedFolder + 1
                                             console.log("Second Test: Clicked on Folder Nr. 1 BELOW")
 
+                                            let nextArray = myArray[ind] + "/" + (ind)
+                                            setMyArray(oldArray => [...oldArray, nextArray]);
+
                                             if (numberTimesClickedFolder === 1){
                                                 startTimeClickedFolder1 = performance.now()
                                             } else if (numberTimesClickedFolder === 3){
@@ -503,7 +512,7 @@ function QuoteApp() {
                                             <div
                                                 style={{ marginTop: "20px", marginRight: "5px" }}
                                             >
-                                                Folder NR. 1 </div>
+                                                folder nr. {ind}</div>
                                         </div>
 
                                     </button>

@@ -107,11 +107,10 @@ function QuoteApp() {
     const [showItemName, setItemName] = useState("Item not selected");
     let [isDraggingOverFolder, setIsDragging] = useState(false);
 
-    const [diffXMousePoint, setDiffXMousePoint] = useState(10)
-
     let [disable, setDisable] = React.useState(false);
     let [disableFinish, setDisableFinish] = React.useState(false);
 
+    let [myArray, setMyArray] = useState(["HOME"]);
 
     //  index: row, droppableId = Column
     const [sourceDroppableId, setsourceDroppableId] = useState(-1)
@@ -225,13 +224,13 @@ function QuoteApp() {
     // To enable hovering over folder and opening/adding new folder to the right
     async function UserGreeting()  {
         if(isDraggingOverFolder){
-            await setState([...state, getItems(sourceIndex+1, 0)])
+            await setState([...state, getItems(5, 0)])
             setIsDragging(false)
             endTime = performance.now()
             let usedTime = (endTime - startTime)
             console.log("Dragged Item and Hovered over folder and had: " + usedTime + " milliseconds")
             totalTimeTest1 = totalTimeTest1 + usedTime
-            console.log("Totally used time for test 1: " + totalTimeTest1)
+            console.log("Totally used Dragging time for test 1: " + totalTimeTest1)
         }
 
     }
@@ -246,7 +245,7 @@ function QuoteApp() {
         <div>
             <div  style={{ color: "lightgreen" }}>
                 <h1>TEST 1: Drag and Drop</h1>
-                <p>Thank you for taking your time. Here is the first task with the goal to move the item 2 to the folder 2.
+                <p>Thank you for taking your time. Here is the first task with the goal to move the item 2 to the folder 6.
                     Please read the instructions carefully before you start:</p>
                 <form>
                     <label>
@@ -256,9 +255,9 @@ function QuoteApp() {
                         />
                     </label>
                 </form>
-                <p>2. Click on START TEST 1 and Drag and Drop the item 2 into the folder 0 by dragging it over the Folder NR. 0</p>
-                <p>3. Drag and Drop the new item 2 into the BELOW folder 1 </p>
-                <p>4. Drag and Drop the new item 2 into the folder 2</p>
+                <p>2. Click on START TEST 1 and Drag and Drop the item 2 into the corresponding folders (alternately the upper one then below one). Start by dragging the item 2 over the Folder NR. 0</p>
+                <p>3. Drag and Drop the new item 2 into the BELOW folder nr. 1 </p>
+                <p>4. Drag and Drop the new item 2 into the ABOVE Folder NR. 2 and so on till it is in the folder 6.</p>
                 <p>5. Stop the test by pressing on the END TEST 1 Button</p>
                 <br></br>
                 {disableFinish && <p>
@@ -327,7 +326,7 @@ function QuoteApp() {
                                     align="left"
                                 >
                                     <p>
-                                        <b>Folder NR. {ind-1} </b>
+                                        <b> {myArray[ind]} </b>
                                         {/*HOME\DOCUMENTS\Folder NR.*/}
                                     </p>
                                     <br></br>
@@ -340,7 +339,13 @@ function QuoteApp() {
                                         //     minHeight: "50px",
                                         //     marginBottom: "8px"
                                         // }}
-                                        onMouseOver={UserGreeting}
+                                        onMouseOver={() => {
+                                            if(isDraggingOverFolder){
+                                                let nextArray = myArray[ind] + "/" + (ind)
+                                                setMyArray(oldArray => [...oldArray, nextArray])
+                                            }
+                                            UserGreeting()
+                                        }}
                                         onClick={() => {
                                             setState([...state, getItems(5)]);
                                             numberTimesClickedFolder = numberTimesClickedFolder + 1
@@ -348,7 +353,7 @@ function QuoteApp() {
 
                                             if (numberTimesClickedFolder === 1){
                                                 startTimeClickedFolder1 = performance.now()
-                                            } else if (numberTimesClickedFolder === 3){
+                                            } else if (numberTimesClickedFolder === 7){
                                                 endTimeClickedFolder2 = performance.now()
                                                 totalTimeClickingFolders = endTimeClickedFolder2-startTimeClickedFolder1
                                                 console.log("Test 2: Used time to click/open three folders: " + (totalTimeClickingFolders))
@@ -422,7 +427,14 @@ function QuoteApp() {
                                         //     minHeight: "50px",
                                         //     marginBottom: "8px"
                                         // }}
-                                        onMouseOver={UserGreeting}
+                                        onMouseOver={() => {
+                                            if(isDraggingOverFolder){
+                                                let nextArray = myArray[ind] + "/" + (ind)
+                                                setMyArray(oldArray => [...oldArray, nextArray])
+                                            }
+                                            UserGreeting()
+                                        }}
+
                                         onClick={() => {
                                             setState([...state, getItems(5)]);
                                             numberTimesClickedFolder = numberTimesClickedFolder + 1
@@ -441,7 +453,7 @@ function QuoteApp() {
                                             <div
                                                 style={{ marginTop: "20px", marginRight: "5px" }}
                                             >
-                                                Folder NR. 1 </div>
+                                                folder nr. {ind}</div>
                                         </div>
 
                                     </button>
