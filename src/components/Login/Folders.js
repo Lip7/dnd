@@ -126,18 +126,18 @@ function QuoteApp() {
 
     useEffect(()=>{
         // only start the eye gazing once at the beginning until one item was clicked
-        if(sourceDroppableId < 0){
-            webgazer.setGazeListener((data,clock)=>{
-                //console.log(data)
-                if((typeof data === "null")|| (typeof data === "null")){
-                    dataXY = {x: 0, y: 0}
-                }
-                else{
-                    dataXY = data
-                    // setInterval(Greeting(dataXY), 1);
-                }
-            }).begin()
-        }
+        // if(sourceDroppableId < 0){
+        //     webgazer.setGazeListener((data,clock)=>{
+        //         //console.log(data)
+        //         if((typeof data === "null")|| (typeof data === "null")){
+        //             dataXY = {x: 0, y: 0}
+        //         }
+        //         else{
+        //             dataXY = data
+        //             // setInterval(Greeting(dataXY), 1);
+        //         }
+        //     }).begin()
+        // }
 
         // check if key B pressed to allow the dropping process
         document.addEventListener('keydown', function(event){

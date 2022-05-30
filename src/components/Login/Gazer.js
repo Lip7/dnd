@@ -115,9 +115,22 @@ function QuoteApp() {
     const [sourceIndex, setsourceIndex] = useState(-1)
 
     // Lines which separate the folders in order to detect which folder is in the eye gazing field
-    let beforeLineBelongsF1 = window.innerWidth/100*80/4 + window.innerWidth/10 // Folder 1
-    let beforeLineBelongsF2 = window.innerWidth/100*80/4*2 + window.innerWidth/10 // Folder 2
-    let beforeLineBelongsF3 = window.innerWidth/100*80/4*3 + window.innerWidth/10 // Folder 3
+    // let beforeLineBelongsF1 = window.innerWidth/100*80/4 + window.innerWidth/10 // Folder 1
+    // let beforeLineBelongsF2 = window.innerWidth/100*80/4*2 + window.innerWidth/10 // Folder 2
+    // let beforeLineBelongsF3 = window.innerWidth/100*80/4*3 + window.innerWidth/10 // Folder 3
+
+    const divideByFolderAmount = 8
+    const percentWidthLeft = 14
+    const windowWidthLeft = window.innerWidth/100*percentWidthLeft
+    const windowMiddleWidthOneFolder = window.innerWidth/100*(100-(2*percentWidthLeft))/divideByFolderAmount
+    let beforeLineBelongsFM1 = windowWidthLeft + windowMiddleWidthOneFolder // Folder -1
+    let beforeLineBelongsF0 = windowWidthLeft + windowMiddleWidthOneFolder*2 // Folder 0
+    let beforeLineBelongsF1 = windowWidthLeft + windowMiddleWidthOneFolder*3// Folder 1
+
+    let beforeLineBelongsF2 = windowWidthLeft + windowMiddleWidthOneFolder*4 // Folder 2
+    let beforeLineBelongsF3 = windowWidthLeft + windowMiddleWidthOneFolder*5 // Folder 3
+    let beforeLineBelongsF4 = windowWidthLeft + windowMiddleWidthOneFolder*6 // Folder 4
+    let beforeLineBelongsF5 = windowWidthLeft + windowMiddleWidthOneFolder*7 // Folder 5
 
     // Eye Gazing Code ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -149,7 +162,7 @@ function QuoteApp() {
                 // console.log(source)
 
                 // if folder nr. 1 selected: droppableId = 0
-                if (dataXY.x < beforeLineBelongsF1){ //&& robotPress
+                if (dataXY.x < beforeLineBelongsFM1){ //&& robotPress
                     console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder -1")
                     let destination = {droppableId: 0, index: state[0].length}
                     let result = { source, destination }
@@ -157,26 +170,57 @@ function QuoteApp() {
                     // move(state[source], state[0], source, destination) (droppableId)
                 }
                 // if folder nr. 2 selected: droppableId = 1
-                else if (dataXY.x < beforeLineBelongsF2){
+                else if (dataXY.x < beforeLineBelongsF0 && dataXY.x > beforeLineBelongsFM1){
                     console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 0")
                     let destination = {droppableId: 1, index: state[1].length}
                     let result = { source, destination }
                     onDragEnd(result)
                 }
                 // if folder nr. 3 selected: droppableId = 2
-                else if (dataXY.x < beforeLineBelongsF3){
+                else if (dataXY.x < beforeLineBelongsF1 && dataXY.x > beforeLineBelongsF0){
                     console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 1")
                     let destination = {droppableId: 2, index: state[2].length}
                     let result = { source, destination }
                     onDragEnd(result)
                 }
                 // if folder nr. 4 selected: droppableId = 3
-                else if (dataXY.x >= beforeLineBelongsF3){
+                else if (dataXY.x < beforeLineBelongsF2 && dataXY.x > beforeLineBelongsF1){
                     console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 2")
                     let destination = {droppableId: 3, index: state[3].length}
                     let result = { source, destination }
                     onDragEnd(result)
                 }
+
+                // if folder nr. 1 selected: droppableId = 0
+                if (dataXY.x < beforeLineBelongsF3 && dataXY.x > beforeLineBelongsF2){ //&& robotPress
+                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 3")
+                    let destination = {droppableId: 4, index: state[4].length}
+                    let result = { source, destination }
+                    onDragEnd(result)
+                    // move(state[source], state[0], source, destination) (droppableId)
+                }
+                // if folder nr. 2 selected: droppableId = 1
+                else if (dataXY.x < beforeLineBelongsF4 && dataXY.x > beforeLineBelongsF3){
+                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 4")
+                    let destination = {droppableId: 5, index: state[5].length}
+                    let result = { source, destination }
+                    onDragEnd(result)
+                }
+                // if folder nr. 3 selected: droppableId = 2
+                else if (dataXY.x < beforeLineBelongsF5 && dataXY.x > beforeLineBelongsF4){
+                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 5")
+                    let destination = {droppableId: 6, index: state[6].length}
+                    let result = { source, destination }
+                    onDragEnd(result)
+                }
+                // if folder nr. 4 selected: droppableId = 3
+                else if (dataXY.x >= beforeLineBelongsF5){
+                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 6")
+                    let destination = {droppableId: 7, index: state[7].length}
+                    let result = { source, destination }
+                    onDragEnd(result)
+                }
+
                 setShowBox(false)
 
                 endTime = performance.now()
@@ -240,6 +284,7 @@ function QuoteApp() {
 
     return (
         <div>
+
         <div  style={{ color: "lightgreen" }}>
             <h1>TEST 2: Drag and Drop with Eye Gazer</h1>
             <p>Thank you again for taking your time. Here is the second task with the same goal to move the item 2 to the folder 2.
@@ -296,6 +341,18 @@ function QuoteApp() {
             <br></br>
             <br></br>
 
+            <div
+                style={{
+                    position: "absolute",
+                    left: beforeLineBelongsF2,  // In Studysession margin left and right 10%
+                    top: window.innerHeight/2,
+                    background: "lightgrey",
+                    border: '1px solid rgba(0, 0, 0, 10)',
+
+                }}
+            >
+                GeeksforGeeks
+            </div>
 
             <MouseTooltip
                 visible={showBox}
@@ -303,6 +360,7 @@ function QuoteApp() {
                 offsetY={15}
             >
             <div
+
 
                 style={{
                     position: "absolute",
