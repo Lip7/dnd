@@ -9,6 +9,7 @@ import AuthVerify from "./components/common/auth-verify";
 import Authservice from "./components/services/Authservice";
 import {Component} from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Gazer from "./components/Login/Gazer";
 
 
 class App extends Component{
@@ -45,6 +46,7 @@ class App extends Component{
 
                         <Switch>
                             <ProtectedRoute exact path="/studysession" component={StudySession}/>
+                            <Route exact path="/gazer" component={Gazer}/>
                             <Route exact path="/folders" component={Folders}/>
                             <Route exact path="/signup" component={Signup}/>
                             <ProtectedRoute exact path="/settings" component={Settings}/>

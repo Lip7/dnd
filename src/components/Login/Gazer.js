@@ -76,7 +76,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
     userSelect: "none",
     padding: grid * 2,
     margin: `0 0 ${grid}px 0`,
-    maxWidth: "100px",
+        maxWidth: "100px",
 
     // change background colour if dragging
     background: isDragging ? "lightgreen" : "white",
@@ -100,14 +100,11 @@ const getListStyle = isDraggingOver => ({
 
 // Function to run Webgazer and folder states
 function QuoteApp() {
-    const [state, setState] = useState([getItems(5) ]);//, getItems(5, 10), getItems(5, 15), getItems(5, 20)]);
-    const [state2, setState2] = useState([getItems(10) ]);//, getItems(5, 10), getItems(5, 15), getItems(5, 20)]);
+    let [state, setState] = useState([getItems(5) ]);//, getItems(5, 10), getItems(5, 15), getItems(5, 20)]);
 
     let [showBox, setShowBox] = useState(false)
     const [showItemName, setItemName] = useState("Item not selected");
     let [isDraggingOverFolder, setIsDragging] = useState(false);
-
-    const [diffXMousePoint, setDiffXMousePoint] = useState(10)
 
     let [disable, setDisable] = React.useState(false);
     let [disableFinish, setDisableFinish] = React.useState(false);
@@ -129,11 +126,11 @@ function QuoteApp() {
         if(sourceDroppableId < 0){
             webgazer.setGazeListener((data,clock)=>{
                 //console.log(data)
-                if((typeof data === "null")|| (typeof data === "null")){
-                    dataXY = {x: 0, y: 0}
-                }
-                else{
-                    dataXY = data
+				if((typeof data === "null")|| (typeof data === "null")){
+					dataXY = {x: 0, y: 0}
+				}
+				else{
+					 dataXY = data
                     // setInterval(Greeting(dataXY), 1);
                 }
             }).begin()
@@ -142,55 +139,55 @@ function QuoteApp() {
         // check if key B pressed to allow the dropping process
         document.addEventListener('keydown', function(event){
 
-                if (event.keyCode == 66 && sourceDroppableId >= 0 ) { // 32 = space, 66 = b
+            if (event.keyCode == 66 && sourceDroppableId >= 0 ) { // 32 = space, 66 = b
 
-                    //webgazer.pause();
-                    // Index = row, droppableId = column = nr folder
-                    // The clicked one solved as source
-                    let source = {droppableId: sourceDroppableId, index: sourceIndex}
-                    // console.log("Source saved in result ")
-                    // console.log(source)
+                //webgazer.pause();
+                // Index = row, droppableId = column = nr folder
+                // The clicked one solved as source
+                let source = {droppableId: sourceDroppableId, index: sourceIndex}
+                // console.log("Source saved in result ")
+                // console.log(source)
 
-                    // if folder nr. 1 selected: droppableId = 0
-                    if (dataXY.x < beforeLineBelongsF1){ //&& robotPress
-                        console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 0")
-                        let destination = {droppableId: 0, index: state[0].length}
-                        let result = { source, destination }
-                        onDragEnd(result)
-                        // move(state[source], state[0], source, destination) (droppableId)
-                    }
-                    // if folder nr. 2 selected: droppableId = 1
-                    else if (dataXY.x < beforeLineBelongsF2){
-                        console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 1")
-                        let destination = {droppableId: 1, index: state[1].length}
-                        let result = { source, destination }
-                        onDragEnd(result)
-                    }
-                    // if folder nr. 3 selected: droppableId = 2
-                    else if (dataXY.x < beforeLineBelongsF3){
-                        console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 2")
-                        let destination = {droppableId: 2, index: state[2].length}
-                        let result = { source, destination }
-                        onDragEnd(result)
-                    }
-                    // if folder nr. 4 selected: droppableId = 3
-                    else if (dataXY.x >= beforeLineBelongsF3){
-                        console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 3")
-                        let destination = {droppableId: 3, index: state[3].length}
-                        let result = { source, destination }
-                        onDragEnd(result)
-                    }
-                    setShowBox(false)
-
-                    endTime = performance.now()
-                    let usedTime = (endTime - startTime)
-                    console.log("Test 2: Dragged Item and used Eye Gazer and had: " + usedTime + " milliseconds")
-                    totalTimeTest1 = totalTimeClickingFolders + usedTime
-                    console.log("Totally used time for test 2: " + totalTimeTest1)
-
-                    //webgazer.resume();
+                // if folder nr. 1 selected: droppableId = 0
+                if (dataXY.x < beforeLineBelongsF1){ //&& robotPress
+                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder -1")
+                    let destination = {droppableId: 0, index: state[0].length}
+                    let result = { source, destination }
+                    onDragEnd(result)
+                    // move(state[source], state[0], source, destination) (droppableId)
                 }
+                // if folder nr. 2 selected: droppableId = 1
+                else if (dataXY.x < beforeLineBelongsF2){
+                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 0")
+                    let destination = {droppableId: 1, index: state[1].length}
+                    let result = { source, destination }
+                    onDragEnd(result)
+                }
+                // if folder nr. 3 selected: droppableId = 2
+                else if (dataXY.x < beforeLineBelongsF3){
+                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 1")
+                    let destination = {droppableId: 2, index: state[2].length}
+                    let result = { source, destination }
+                    onDragEnd(result)
+                }
+                // if folder nr. 4 selected: droppableId = 3
+                else if (dataXY.x >= beforeLineBelongsF3){
+                    console.log("Test 2: Dropped " + "item number " + sourceIndex + " from folder " + sourceDroppableId +  " by clicking B to folder 2")
+                    let destination = {droppableId: 3, index: state[3].length}
+                    let result = { source, destination }
+                    onDragEnd(result)
+                }
+                setShowBox(false)
+
+                endTime = performance.now()
+                let usedTime = (endTime - startTime)
+                console.log("Test 2: Dragged Item and used Eye Gazer and had: " + usedTime + " milliseconds")
+                totalTimeTest1 = totalTimeClickingFolders + usedTime
+                console.log("Totally used time for test 2: " + totalTimeTest1)
+
+                //webgazer.resume();
             }
+        }
         )
 
     }, [sourceDroppableId]);
@@ -233,7 +230,6 @@ function QuoteApp() {
             totalTimeTest1 = totalTimeTest1 + usedTime
             console.log("Totally used time for test 1: " + totalTimeTest1)
         }
-
     }
 
     // Outputes the name of the user
@@ -244,74 +240,82 @@ function QuoteApp() {
 
     return (
         <div>
-            <div  style={{ color: "lightgreen" }}>
-                <h1>TEST 1: Drag and Drop</h1>
-                <p>Thank you for taking your time. Here is the first task with the goal to move the item 2 to the folder 2.
-                    Please read the instructions carefully before you start:</p>
-                <form>
-                    <label>
-                        1. Enter your Name:
+        <div  style={{ color: "lightgreen" }}>
+            <h1>TEST 2: Drag and Drop with Eye Gazer</h1>
+            <p>Thank you again for taking your time. Here is the second task with the same goal to move the item 2 to the folder 2.
+                Please read the instructions carefully before you start:</p>
+            <br></br>
 
-                        <input type="text" name="name" onChange={(event)=>{handleMobile(event.target.value)}}   onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
-                        />
-                    </label>
-                </form>
-                <p>2. Click on START TEST 1 and Drag and Drop the item 2 into the folder 0 by dragging it over the Folder NR. 0</p>
-                <p>3. Drag and Drop the new item 2 into the BELOW folder 1 </p>
-                <p>4. Drag and Drop the new item 2 into the folder 2</p>
-                <p>5. Stop the test by pressing on the END TEST 1 Button</p>
-                <br></br>
-                {disableFinish && <p>
-                    <p>6. Right Click with the mouse on the website and click on inspect to go to CONSOLE OR</p>
-                    <p>7. To open the developer console window on Chrome, use the keyboard shortcut Control-Shift-J on Windows or Cmd-Option-J on a Mac</p>
-                    <p>8. Go to CONSOLE and make a screenshot of the output and save it in order that you can later upload it on the google form after the second task.</p>
-                    <p>9. Do the eye gazer test 2 by clicking on <a className='a' target="_blank" href={"https://drag-and-drop-c9785.web.app/gazer"}> https://drag-and-drop-c9785.web.app/gazer</a> </p>
-                </p>  }
-                <br></br>
-                <button
-                    disabled={disable}
-                    onClick={() => {
-                        startTestTime = performance.now()
-                        setDisable(true)
-                    }}
-                >START TEST 1</button>
+            <p>Make sure you look in your camera and a green frame is around your face.</p>
+            <p>Calibrate the eye gazer (red dot) by looking at the first upper corner on the left (above Folder Nr. -1) and going with the mouse there clicking 5 times with the mouse the corner.
+               <p>Then move simultaneously with the mouse and your eyes to the upper right corner and click 5 times with the mouse the corner. </p>
+                Then go to the under right corner and click 5 times with the mouse the corner. Finally, go to the under left corner
+                and do the same. Repeat all one more time.</p>
+            <br></br>
 
-                {disable &&
-                <button
-                    disabled={disableFinish}
-                    onClick={() => {
-                        let endTestTime1 = performance.now()
-                        console.log("Finished Test 1 and used: " + (endTestTime1-startTestTime))
-                        //setDisable(false)
-                        setDisableFinish(true)
+            <form>
+                <label>
+                    1. Enter your Name:
 
-                    }}>
-                    END TEST 1</button> }
-            </div>
+                    <input type="text" name="name" onChange={(event)=>{handleMobile(event.target.value)}}   onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
+                    />
+                </label>
+            </form>
+
+            <p>2. Click on START TEST 2 and go to the folder NR. 2 by clicking on the folders: Folder NR. 0 -> Folder NR. 1 (BELOW) -> Folder NR. 2</p>
+            <p>3. Select the item 2 by dragging it shortly. Look with the red dot to the folder NR. 2 and click on b when the red dot is inside this folder. The item 2 will be added to this folder</p>
+            <p>4. Stop the test 2 by pressing on the END TEST 2 Button</p>
+            <br></br>
+            {disableFinish && <p>
+                <p>5. Right Click with the mouse on the website and click on inspect to go to CONSOLE OR</p>
+                <p>To open the developer console window on Chrome, use the keyboard shortcut Control-Shift-J on Windows or Cmd-Option-J on a Mac</p>
+                <p>6. Make a screenshot of the output in the console and save it in order that you can later upload it on the google form below. </p>
+                <p>7. Please fill out and the upload the screenshots on the <a className='a' target="_blank" href={"https://forms.gle/Eb6fKaZYjue3V2Pw5"}> google form</a> </p>
+            </p>  }
+            <br></br>
+            <button
+                disabled={disable}
+                onClick={() => {
+                    startTestTime = performance.now()
+                    setDisable(true)
+                }}
+            >START TEST 2</button>
+
+            {disable &&
+            <button
+                disabled={disableFinish}
+                onClick={() => {
+                    let endTestTime1 = performance.now()
+                    console.log("Finished Test 2 and used: " + (endTestTime1-startTestTime))
+                    //setDisable(false)
+                    setDisableFinish(true)
+
+                }}>
+                END TEST 2</button> }
+        </div>
             <br></br>
             <br></br>
 
 
             <MouseTooltip
-                visible={false} // test 1 no selected item showing
+                visible={showBox}
                 offsetX={15}
                 offsetY={15}
             >
-                <div
-                    // onMouseMove={onMouseMove}
+            <div
 
-                    style={{
-                        position: "absolute",
-                        background: "grey",
-                        border: '1px solid rgba(0, 0, 0, 10)',
-                        padding: 5,
+                style={{
+                    position: "absolute",
+                    background: "grey",
+                    border: '1px solid rgba(0, 0, 0, 10)',
+                    padding: 5,
 
-                    }}
-                >
-                    {
-                        showItemName
-                    }
-                </div>
+                }}
+            >
+                {
+                    showItemName
+                }
+            </div>
             </MouseTooltip>
 
             <div style={{ display: "flex" }}>
@@ -328,7 +332,7 @@ function QuoteApp() {
                                 >
                                     <p>
                                         <b>Folder NR. {ind-1} </b>
-                                        {/*HOME\DOCUMENTS\Folder NR.*/}
+                                         {/*HOME\DOCUMENTS\Folder NR.*/}
                                     </p>
                                     <br></br>
                                     <button
@@ -340,7 +344,7 @@ function QuoteApp() {
                                         //     minHeight: "50px",
                                         //     marginBottom: "8px"
                                         // }}
-                                        onMouseOver={UserGreeting}
+                                        // onMouseOver={UserGreeting}
                                         onClick={() => {
                                             setState([...state, getItems(5)]);
                                             numberTimesClickedFolder = numberTimesClickedFolder + 1
@@ -377,7 +381,7 @@ function QuoteApp() {
                                             {(provided, snapshot) => (
                                                 <div
 
-                                                    ref={provided.innerRef}
+                                                ref={provided.innerRef}
                                                     {...provided.draggableProps}
                                                     {...provided.dragHandleProps}
                                                     style={getItemStyle(
@@ -386,8 +390,8 @@ function QuoteApp() {
                                                     )}
                                                 >
                                                     <div>
-                                                        <img src={word} width="20" height="20"/>
-                                                        {" " + item.content}
+                                                    <img src={word} width="20" height="20"/>
+                                                    {" " + item.content}
                                                     </div>
 
                                                     {snapshot.isDragging ? setsourceIndex(index) : ''}
@@ -422,7 +426,7 @@ function QuoteApp() {
                                         //     minHeight: "50px",
                                         //     marginBottom: "8px"
                                         // }}
-                                        onMouseOver={UserGreeting}
+                                        // onMouseOver={UserGreeting}
                                         onClick={() => {
                                             setState([...state, getItems(5)]);
                                             numberTimesClickedFolder = numberTimesClickedFolder + 1

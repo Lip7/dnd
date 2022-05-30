@@ -25,3 +25,10 @@
     background-color: palegoldenrod;
     border-radius: 10px;
 }
+
+.a{
+    color: #FFFFFF;
+}
+.a:hover {
+    color: #00F
+}

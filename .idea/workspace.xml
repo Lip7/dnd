@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="53577b44-0edc-4738-8be7-1283da84c7c7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/Login/Gazer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/.cache/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/.eslintcache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Login/Folders.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login/Folders.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Login/button.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login/button.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Login/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +46,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/build" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/Login" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -54,6 +58,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\pbuch\Documents\Master\SecondSemester\MMI\dnd\src\components\Login" />
       <recent name="C:\Users\pbuch\Documents\Master\SecondSemester\MMI\dnd\build" />
       <recent name="C:\Users\pbuch\Documents\Master\SecondSemester\MMI\thingy-client-purple\src\components\Login" />
     </key>
@@ -115,7 +120,7 @@
       <workItem from="1653568579078" duration="12378000" />
       <workItem from="1653652399043" duration="2433000" />
       <workItem from="1653735139781" duration="23675000" />
-      <workItem from="1653818421827" duration="15503000" />
+      <workItem from="1653818421827" duration="27225000" />
     </task>
     <servers />
   </component>
