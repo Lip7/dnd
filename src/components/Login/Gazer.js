@@ -78,7 +78,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
     maxWidth: "100px",
 
     // change background colour if dragging
-    background: isDragging ? "lightgreen" : "white",
+    background: isDragging ? "white" : "white",  //lightgreen
 
     // styles we need to apply on draggables
     ...draggableStyle
@@ -86,7 +86,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 
 // Style of the Folders (Here change to activate the folders/list when user selects the destination folder???)
 const getListStyle = isDraggingOver => ({
-    background: isDraggingOver ? "lightblue" : "white",
+    background: isDraggingOver ? "white" : "white", //lightblue
     padding: grid,
     border: '1px solid rgba(0, 0, 0, 10)',
     width: 250,
@@ -99,7 +99,13 @@ const getListStyle = isDraggingOver => ({
 
 // Function to run Webgazer and folder states
 function QuoteApp() {
-    let [state, setState] = useState([getItems(5) ]);//, getItems(5, 10), getItems(5, 15), getItems(5, 20)]);
+    //et [state, setState] = useState([getItems(5) ]);//, getItems(5, 10), getItems(5, 15), getItems(5, 20)]);
+
+    let [state, setState] = useState([getItems(5), getItems(5), getItems(5), getItems(5), getItems(5), getItems(5), getItems(5), getItems(5) ]);//, getItems(5, 10), getItems(5, 15), getItems(5, 20)]);
+
+    let [showFolder, setShowFolder] = useState([true, false, false, false, false, false, false, false])
+
+    let [filePath, setFilePath] = useState(["HOME", "HOME/0", "HOME/0/1", "HOME/0/1/2", "HOME/0/1/2/3", "HOME/0/1/2/3/4", "HOME/0/1/2/3/4/5", "HOME/0/1/2/3/4/5/6"])
 
     let [showBox, setShowBox] = useState(false)
     const [showItemName, setItemName] = useState("Item not selected");
@@ -310,7 +316,7 @@ function QuoteApp() {
 
                 <p>2. Click on START TEST 2 and go to the folder NR. 6 by clicking on the folders (upper folder, below one, upper one, below one and so on): </p>
                     <p>Like Folder NR. 0 -> folder nr. 1 (BELOW) -> Folder NR. 2 -> folder nr. 3 (BELOW) and so on</p>
-                <p>3. Select the item 2 by dragging it shortly. Look with the red dot to the folder NR. 6 and click on the key <b>b</b> when the red dot is inside the folder 6. The item 2 will be added to this folder.</p>
+                <p>3. Select the item 2 by dragging it shortly. Look with the red dot to the folder NR. 6 and click on the key <b>b</b> when the red dot is inside the folder 6. The item 2 will be added to the end of this folder.</p>
                 <p>4. Stop the test 2 by pressing on the END TEST 2 Button</p>
                 <br></br>
                 {disableFinish && <p>
@@ -390,13 +396,13 @@ function QuoteApp() {
                                     {...provided.droppableProps}
                                     align="left"
                                 >
-                                    <p>
-                                        <b> {myArray[ind]} </b>
+                                    {showFolder[ind] &&       <p>
+                                        <b> {filePath[ind]} </b>
                                         {/*Folder NR. {ind-1}*/}
                                         {/*HOME\DOCUMENTS\Folder NR.*/}
-                                    </p>
+                                    </p>}
                                     <br></br>
-                                    <button
+                                    {showFolder[ind] && <button
                                         type="button"
                                         // style={{
                                         //     maxWidth: "285px",
@@ -406,10 +412,19 @@ function QuoteApp() {
                                         //     marginBottom: "8px"
                                         // }}
                                         // onMouseOver={UserGreeting}
-                                        onClick={() => {
-                                            setState([...state, getItems(5)]);
+                                        onMouseOver={() => {
+                                            // setState([...state, getItems(5)]);
                                             numberTimesClickedFolder = numberTimesClickedFolder + 1
                                             console.log("Second Test: Clicked on Folder Nr. " + (ind))
+
+                                            // let showFoldersNew = showFolder.map(el => (
+                                            //     el.name===(ind+1)? {...el, key: false}: el
+                                            // ))
+                                            // setShowFolder({ showFoldersNew });
+
+                                            for (var i = 0; i <= (ind+1); i++) {
+                                                showFolder[i] = true
+                                            }
 
                                             let nextArray = myArray[ind] + "/" + (ind)
                                             setMyArray(oldArray => [...oldArray, nextArray])
@@ -421,8 +436,29 @@ function QuoteApp() {
                                                 totalTimeClickingFolders = endTimeClickedFolder2-startTimeClickedFolder1
                                                 console.log("Test 2: Used time to click/open three folders: " + (totalTimeClickingFolders))
                                             }
-                                            // {FolderPath = FolderPath + "Folder NR." +  {ind} + "/"}
                                         }}
+                                        // onClick={() => {
+                                        //     // setState([...state, getItems(5)]);
+                                        //     numberTimesClickedFolder = numberTimesClickedFolder + 1
+                                        //     console.log("Second Test: Clicked on Folder Nr. " + (ind))
+                                        //
+                                        //     for (var i = 0; i <= (ind+1); i++) {
+                                        //         showFolder[i] = true
+                                        //     }
+                                        //
+                                        //
+                                        //     let nextArray = myArray[ind] + "/" + (ind)
+                                        //     setMyArray(oldArray => [...oldArray, nextArray])
+                                        //
+                                        //     if (numberTimesClickedFolder === 1){
+                                        //         startTimeClickedFolder1 = performance.now()
+                                        //     } else if (numberTimesClickedFolder === 7){
+                                        //         endTimeClickedFolder2 = performance.now()
+                                        //         totalTimeClickingFolders = endTimeClickedFolder2-startTimeClickedFolder1
+                                        //         console.log("Test 2: Used time to click/open three folders: " + (totalTimeClickingFolders))
+                                        //     }
+                                        //     // {FolderPath = FolderPath + "Folder NR." +  {ind} + "/"}
+                                        // }}
                                     >
                                         <div className='rowC'>
                                             <img  src={folderImage} width="50" height="50"/>
@@ -432,7 +468,7 @@ function QuoteApp() {
                                                 Folder NR. {ind} </div>
                                         </div>
 
-                                    </button>
+                                    </button>}
 
 
                                     {el.map((item, index) => (
@@ -453,16 +489,16 @@ function QuoteApp() {
                                                         provided.draggableProps.style
                                                     )}
                                                 >
-                                                    <div>
+                                                    {showFolder[ind] && <div>
                                                         <img src={word} width="20" height="20"/>
                                                         {" " + item.content}
-                                                    </div>
+                                                    </div>}
 
                                                     {snapshot.isDragging ? setsourceIndex(index) : ''}
                                                     {snapshot.isDragging ? setsourceDroppableId(ind.toString()) : ''}
 
                                                     {snapshot.isDragging ? setItemName(item.id.substr(0, 7) + " selected") : '' }
-                                                    <div style={{ color: "lightgreen" }}>{snapshot.isDragging ? (startTime = performance.now()) : ""  }</div>
+                                                    <div style={{ color: "white" }}>{snapshot.isDragging ? (startTime = performance.now()) : ""  }</div>
 
                                                     {(sourceIndex > 0 && !isDraggingOverFolder) ? (console.log("Is dragging item " + sourceIndex  + " from Folder Nr " + (sourceDroppableId-1) + " and started: " + startTime)) : ""}
                                                     {snapshot.isDragging ? setShowBox(true) : '' }
@@ -481,7 +517,7 @@ function QuoteApp() {
                                         </Draggable>
                                     ))}
                                     {provided.placeholder}
-                                    <button
+                                    {showFolder[ind] && <button
                                         type="button"
                                         // style={{
                                         //     maxWidth: "285px",
@@ -490,22 +526,47 @@ function QuoteApp() {
                                         //     minHeight: "50px",
                                         //     marginBottom: "8px"
                                         // }}
-                                        // onMouseOver={UserGreeting}
-                                        onClick={() => {
-                                            setState([...state, getItems(5)]);
+                                        onMouseOver={() => {
+                                            // setState([...state, getItems(5)]);
                                             numberTimesClickedFolder = numberTimesClickedFolder + 1
-                                            console.log("Second Test: Clicked on Folder Nr. 1 BELOW")
+                                            console.log("Second Test: Clicked on Folder Nr. " + (ind))
+
+                                            // let showFoldersNew = showFolder.map(el => (
+                                            //     el.name===(ind+1)? {...el, key: false}: el
+                                            // ))
+                                            // setShowFolder({ showFoldersNew });
+
+                                            for (var i = 0; i <= (ind+1); i++) {
+                                                showFolder[i] = true
+                                            }
 
                                             let nextArray = myArray[ind] + "/" + (ind)
-                                            setMyArray(oldArray => [...oldArray, nextArray]);
+                                            setMyArray(oldArray => [...oldArray, nextArray])
 
                                             if (numberTimesClickedFolder === 1){
                                                 startTimeClickedFolder1 = performance.now()
-                                            } else if (numberTimesClickedFolder === 3){
+                                            } else if (numberTimesClickedFolder === 7){
                                                 endTimeClickedFolder2 = performance.now()
                                                 totalTimeClickingFolders = endTimeClickedFolder2-startTimeClickedFolder1
                                                 console.log("Test 2: Used time to click/open three folders: " + (totalTimeClickingFolders))
-                                            }                                        }}
+                                            }
+                                        }}
+                                        // onClick={() => {
+                                        //     setState([...state, getItems(5)]);
+                                        //     numberTimesClickedFolder = numberTimesClickedFolder + 1
+                                        //     console.log("Second Test: Clicked on Folder Nr. 1 BELOW")
+                                        //
+                                        //     let nextArray = myArray[ind] + "/" + (ind)
+                                        //     setMyArray(oldArray => [...oldArray, nextArray]);
+                                        //
+                                        //     if (numberTimesClickedFolder === 1){
+                                        //         startTimeClickedFolder1 = performance.now()
+                                        //     } else if (numberTimesClickedFolder === 3){
+                                        //         endTimeClickedFolder2 = performance.now()
+                                        //         totalTimeClickingFolders = endTimeClickedFolder2-startTimeClickedFolder1
+                                        //         console.log("Test 2: Used time to click/open three folders: " + (totalTimeClickingFolders))
+                                        //     }
+                                        //     }}
                                     >
                                         <div className='rowC'>
                                             <img  src={folderImage} width="50" height="50"/>
@@ -515,7 +576,7 @@ function QuoteApp() {
                                                 folder nr. {ind}</div>
                                         </div>
 
-                                    </button>
+                                    </button>}
                                 </div>
 
                             )}
