@@ -15,7 +15,8 @@ import folderImage from './folderImage.png'; // with import
 Info
 - browser sometimes after a while does not show camera anymore, close all apps using cameras and browser and restart
  */
-
+// avoids showing warn and errors in console
+console.warn = console.error = () => {};
 
 // global webgazer in order to have only one and saving data in a global value
 let dataXY = {x: 0, y: 0}
@@ -257,8 +258,8 @@ function QuoteApp() {
                 {disableFinish && <p>
                     <p>6. Now go to the developer console window on Chrome, use the keyboard shortcut Control-Shift-J on Windows or Cmd-Option-J on a Mac </p>
                     <p>OR Right Click with the mouse on the website and click on inspect to go to CONSOLE</p>
-                    <p>9. Go to CONSOLE and make a screenshot of the output and save it in order that you can later upload it on the google form after the second task.</p>
-                    <p>10. Do the eye gazer test 2 by clicking on <a className='a' target="_blank" href={"https://dndgazer-d0158.web.app/gazer"}> https://drag-and-drop-c9785.web.app/gazer</a> </p>
+                    <p>9. Go to CONSOLE and make a screenshot of the output and save it as yourName_test1_trial1 in order that you can later upload it on the google form after the second task.</p>
+                    <p>10. Please do the whole test 1 in total 3 times. If you have 3 screenshots of the test 1, then move to the eye gazer test 2 by clicking on <a className='a' target="_blank" href={"https://dndgazer-d0158.web.app/gazer"}> https://drag-and-drop-c9785.web.app/gazer</a> </p>
                 </p>  }
                 <br></br>
                 <button
