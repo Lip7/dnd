@@ -415,28 +415,31 @@ function QuoteApp() {
                                         // onMouseOver={UserGreeting}
                                         onMouseOver={() => {
                                             // setState([...state, getItems(5)]);
-                                            numberTimesClickedFolder = numberTimesClickedFolder + 1
-                                            console.log("Second Test: Clicked on Folder Nr. " + (ind))
+                                            if(disable){
+                                                numberTimesClickedFolder = numberTimesClickedFolder + 1
+                                                console.log("Second Test: Clicked on Folder Nr. " + (ind))
 
-                                            // let showFoldersNew = showFolder.map(el => (
-                                            //     el.name===(ind+1)? {...el, key: false}: el
-                                            // ))
-                                            // setShowFolder({ showFoldersNew });
+                                                // let showFoldersNew = showFolder.map(el => (
+                                                //     el.name===(ind+1)? {...el, key: false}: el
+                                                // ))
+                                                // setShowFolder({ showFoldersNew });
 
-                                            for (var i = 0; i <= (ind+1); i++) {
-                                                showFolder[i] = true
+                                                for (var i = 0; i <= (ind+1); i++) {
+                                                    showFolder[i] = true
+                                                }
+
+                                                let nextArray = myArray[ind] + "/" + (ind)
+                                                setMyArray(oldArray => [...oldArray, nextArray])
+
+                                                if (numberTimesClickedFolder === 1){
+                                                    startTimeClickedFolder1 = performance.now()
+                                                } else if (numberTimesClickedFolder === 7){
+                                                    endTimeClickedFolder2 = performance.now()
+                                                    totalTimeClickingFolders = endTimeClickedFolder2-startTimeClickedFolder1
+                                                    console.log("Test 2: Used time to click/open all folders: " + (totalTimeClickingFolders))
+                                                }
                                             }
 
-                                            let nextArray = myArray[ind] + "/" + (ind)
-                                            setMyArray(oldArray => [...oldArray, nextArray])
-
-                                            if (numberTimesClickedFolder === 1){
-                                                startTimeClickedFolder1 = performance.now()
-                                            } else if (numberTimesClickedFolder === 7){
-                                                endTimeClickedFolder2 = performance.now()
-                                                totalTimeClickingFolders = endTimeClickedFolder2-startTimeClickedFolder1
-                                                console.log("Test 2: Used time to click/open three folders: " + (totalTimeClickingFolders))
-                                            }
                                         }}
                                         // onClick={() => {
                                         //     // setState([...state, getItems(5)]);
@@ -529,28 +532,33 @@ function QuoteApp() {
                                         // }}
                                         onMouseOver={() => {
                                             // setState([...state, getItems(5)]);
-                                            numberTimesClickedFolder = numberTimesClickedFolder + 1
-                                            console.log("Second Test: Clicked on Folder Nr. " + (ind))
 
-                                            // let showFoldersNew = showFolder.map(el => (
-                                            //     el.name===(ind+1)? {...el, key: false}: el
-                                            // ))
-                                            // setShowFolder({ showFoldersNew });
+                                            if(disable){
+                                                numberTimesClickedFolder = numberTimesClickedFolder + 1
+                                                console.log("Second Test: Clicked on Folder Nr. " + (ind))
 
-                                            for (var i = 0; i <= (ind+1); i++) {
-                                                showFolder[i] = true
+                                                // let showFoldersNew = showFolder.map(el => (
+                                                //     el.name===(ind+1)? {...el, key: false}: el
+                                                // ))
+                                                // setShowFolder({ showFoldersNew });
+
+                                                for (var i = 0; i <= (ind+1); i++) {
+                                                    showFolder[i] = true
+                                                }
+
+                                                let nextArray = myArray[ind] + "/" + (ind)
+                                                setMyArray(oldArray => [...oldArray, nextArray])
+
+                                                if (numberTimesClickedFolder === 1){
+                                                    startTimeClickedFolder1 = performance.now()
+                                                } else if (numberTimesClickedFolder === 7){
+                                                    endTimeClickedFolder2 = performance.now()
+                                                    totalTimeClickingFolders = endTimeClickedFolder2-startTimeClickedFolder1
+                                                    console.log("Test 2: Used time to click/open all folders: " + (totalTimeClickingFolders))
+                                                }
                                             }
 
-                                            let nextArray = myArray[ind] + "/" + (ind)
-                                            setMyArray(oldArray => [...oldArray, nextArray])
 
-                                            if (numberTimesClickedFolder === 1){
-                                                startTimeClickedFolder1 = performance.now()
-                                            } else if (numberTimesClickedFolder === 7){
-                                                endTimeClickedFolder2 = performance.now()
-                                                totalTimeClickingFolders = endTimeClickedFolder2-startTimeClickedFolder1
-                                                console.log("Test 2: Used time to click/open three folders: " + (totalTimeClickingFolders))
-                                            }
                                         }}
                                         // onClick={() => {
                                         //     setState([...state, getItems(5)]);
