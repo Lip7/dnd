@@ -314,15 +314,16 @@ function QuoteApp() {
                     </label>
                 </form>
 
-                <p>2. Click on START TEST 2 and go to the folder NR. 6 by clicking on the folders (upper folder, below one, upper one, below one and so on): </p>
-                    <p>Like Folder NR. 0 -> folder nr. 1 (BELOW) -> Folder NR. 2 -> folder nr. 3 (BELOW) and so on</p>
-                <p>3. Select the item 2 by dragging it shortly. Look with the red dot to the folder NR. 6 and click on the key <b>b</b> when the red dot is inside the folder 6. The item 2 will be added to the end of this folder.</p>
-                <p>4. Stop the test 2 by pressing on the END TEST 2 Button</p>
+                <p>2. Click on START TEST 2 and select the item 2 by dragging it shortly (click+move a bit).
+                    Then go to the folder NR. 6 by hovering on the folders alternately starting with the Folder NR. 0 (upper folder, below one, upper one, below one and so on)
+                    like Folder NR. 0 (Top) -> folder nr. 1 (Bottom) -> Folder NR. 2 (Top) -> folder nr. 3 (Bottom) and so on.</p>
+                <p>3. Look with the red dot to the folder NR. 6 and click on the key <b>b</b> when the red dot is inside the folder 6. The item 2 will be added to the end of this folder.</p>
+                <p>4. Stop the test 2 by pressing on the END TEST 2 Button. Please do not start again if you failed (i.e. adding it to the wrong folder) and leave it like this.</p>
                 <br></br>
                 {disableFinish && <p>
                     <p>5. Now go to the developer console window on Chrome, use the keyboard shortcut Control-Shift-J on Windows or Cmd-Option-J on a Mac </p>
                     <p>OR Right Click with the mouse on the website and click on inspect to go to CONSOLE</p>
-                    <p>6. Make a screenshot of your whole screen including the output in the console and save it as yourName_test2_trialX in order that you can later upload it on the google form below. </p>
+                    <p>6. Make a screenshot of your whole screen including the output in the console (you can move the window of the output more to the left like a normal window) and save it as yourName_test2_trialX in order that you can later upload it on the google form below. </p>
                     <p>7. Please do the test 2 also in total 3 times (refresh the page everytime and do again the calibration). Then when you have 3 screenshots of the test 2, fill out and upload the screenshots in the <a className='a' target="_blank" href={"https://forms.gle/Eb6fKaZYjue3V2Pw5"}> google form</a> </p>
                 </p>  }
                 <br></br>

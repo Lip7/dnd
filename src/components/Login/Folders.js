@@ -250,15 +250,15 @@ function QuoteApp() {
                         />
                     </label>
                 </form>
-                <p>2. Click on START TEST 1 and Drag and Drop the item 2 into the corresponding folders (alternately the upper one then below one). Start by dragging the item 2 over the Folder NR. 0</p>
-                <p>3. Drag and Drop the new item 2 into the BELOW folder nr. 1 </p>
-                <p>4. Drag and Drop the new item 2 into the ABOVE Folder NR. 2 and so on till it is in the folder 6.</p>
-                <p>5. Stop the test by pressing on the END TEST 1 Button</p>
+                <p>2. Click on START TEST 1 and Drag and Drop the item 2 into the corresponding folders (alternately like Folder NR. 0 (Top) -> folder nr. 1 (Bottom) -> Folder NR. 2 (Top) -> folder nr. 3 (Bottom) and so on). </p>
+                <p>3. Start by dragging the item 2 over the Folder NR. 0. Then Drag and Drop the new item 2 in the Folder NR. 0 into the bottom folder nr. 1 </p>
+                <p>4. Drag and Drop the new item 2 into the top Folder NR. 2 and so on till it is in the folder 6.</p>
+                <p>5. Stop the test by pressing on the END TEST 1 Button. Please do not start again if you failed and leave it like this.</p>
                 <br></br>
                 {disableFinish && <p>
                     <p>6. Now go to the developer console window on Chrome, use the keyboard shortcut Control-Shift-J on Windows or Cmd-Option-J on a Mac </p>
                     <p>OR Right Click with the mouse on the website and click on inspect to go to CONSOLE</p>
-                    <p>9. Go to CONSOLE and make a screenshot of the output and save it as yourName_test1_trial1 in order that you can later upload it on the google form after the second task.</p>
+                    <p>9. Go to CONSOLE and make a screenshot of the whole screen including the output of the console (you can move the window of the output more to the left like a normal window) and save it as yourName_test1_trial1 in order that you can later upload it on the google form after the second task.</p>
                     <p>10. Please do the whole test 1 in total 3 times. If you have 3 screenshots of the test 1, then move to the eye gazer test 2 by clicking on <a className='a' target="_blank" href={"https://dndgazer-d0158.web.app/gazer"}> https://drag-and-drop-c9785.web.app/gazer</a> </p>
                 </p>  }
                 <br></br>
