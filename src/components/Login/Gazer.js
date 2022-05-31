@@ -314,8 +314,8 @@ function QuoteApp() {
             <p>4. Stop the test 2 by pressing on the END TEST 2 Button</p>
             <br></br>
             {disableFinish && <p>
-                <p>5. Right Click with the mouse on the website and click on inspect to go to CONSOLE OR</p>
-                <p>To open the developer console window on Chrome, use the keyboard shortcut Control-Shift-J on Windows or Cmd-Option-J on a Mac</p>
+                <p>5. Now go to the developer console window on Chrome, use the keyboard shortcut Control-Shift-J on Windows or Cmd-Option-J on a Mac </p>
+                <p>OR Right Click with the mouse on the website and click on inspect to go to CONSOLE</p>
                 <p>6. Make a screenshot of your whole screen including the output in the console and save it in order that you can later upload it on the google form below. </p>
                 <p>7. Please fill out and the upload the screenshots in the <a className='a' target="_blank" href={"https://forms.gle/Eb6fKaZYjue3V2Pw5"}> google form</a> </p>
             </p>  }

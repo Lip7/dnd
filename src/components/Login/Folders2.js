@@ -1,9 +1,39 @@
 import React, {useEffect, useRef, useState} from "react";
+import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import MouseTooltip from 'react-sticky-mouse-tooltip';
 import './button.css';
+
 import word from './word.png'; // with import
 import folderImage from './folderImage.png'; // with import
+
+// require("firebase-functions/lib/logger/compat");
+//
+// const functions = require("firebase-functions");
+//
+//
+// functions.logger.log("Hello from info. Here's an object:");
+
+// // get the Console class
+// const { Console } = require("console");
+// // get fs module for creating write streams
+// const fs = require("fs");
+//
+// // make a new logger
+// const myLogger = new Console({
+//     stdout: fs.createWriteStream("normalStdout.txt"),
+//     stderr: fs.createWriteStream("errStdErr.txt"),
+// });
+
+// let fs = require('fs')
+// let logger = fs.createWriteStream('log.txt', {
+//     flags: 'a' // 'a' means appending (old data will be preserved)
+// })
+//
+// logger.write('some data') // append string to your file
+// logger.write('more data') // again
+// logger.write('and more') // again
+
 
 
 /* TODO:
@@ -11,14 +41,17 @@ import folderImage from './folderImage.png'; // with import
 - add log
 - show selected folder only for second test and also disable hover
 - if move item 1 from folder 1 and then want to move item 2 from folder 1 (same start folder), it moves still item 1
-
 Info
 - browser sometimes after a while does not show camera anymore, close all apps using cameras and browser and restart
  */
 
 
 // global webgazer in order to have only one and saving data in a global value
+const webgazer=window.webgazer
 let dataXY = {x: 0, y: 0}
+let diffXMousePoint = 0
+let diffYMousePoint = 0
+let FolderPath = "HOME/DOCUMENTS/"
 let startTime
 let endTime
 let totalTimeTest1 = 0 // and two
@@ -65,7 +98,6 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 };
 const grid = 8;
 
-// Style of Files
 const getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
     userSelect: "none",
@@ -93,18 +125,19 @@ const getListStyle = isDraggingOver => ({
 
 });
 
-// Function to run Webgazer and folder states
 function QuoteApp() {
     const [state, setState] = useState([getItems(5) ]);//, getItems(5, 10), getItems(5, 15), getItems(5, 20)]);
+    const [state2, setState2] = useState([getItems(10) ]);//, getItems(5, 10), getItems(5, 15), getItems(5, 20)]);
 
     let [showBox, setShowBox] = useState(false)
     const [showItemName, setItemName] = useState("Item not selected");
     let [isDraggingOverFolder, setIsDragging] = useState(false);
 
-    let [disable, setDisable] = React.useState(false);
-    let [disableFinish, setDisableFinish] = React.useState(false);
+    const [diffXMousePoint, setDiffXMousePoint] = useState(10)
 
-    let [myArray, setMyArray] = useState(["HOME"]);
+    let [disable, setDisable] = React.useState(false);
+    let [startTime2, setStartTime] = useState(0)
+
 
     //  index: row, droppableId = Column
     const [sourceDroppableId, setsourceDroppableId] = useState(-1)
@@ -119,21 +152,22 @@ function QuoteApp() {
 
     useEffect(()=>{
         // only start the eye gazing once at the beginning until one item was clicked
-        // if(sourceDroppableId < 0){
-        //     webgazer.setGazeListener((data,clock)=>{
-        //         //console.log(data)
-        //         if((typeof data === "null")|| (typeof data === "null")){
-        //             dataXY = {x: 0, y: 0}
-        //         }
-        //         else{
-        //             dataXY = data
-        //             // setInterval(Greeting(dataXY), 1);
-        //         }
-        //     }).begin()
-        // }
+        if(sourceDroppableId < 0){
+            webgazer.setGazeListener((data,clock)=>{
+                //console.log(data)
+                if((typeof data === "null")|| (typeof data === "null")){
+                    dataXY = {x: 0, y: 0}
+                }
+                else{
+                    dataXY = data
+                    // setInterval(Greeting(dataXY), 1);
+                }
+            }).begin()
+        }
 
         // check if key B pressed to allow the dropping process
         document.addEventListener('keydown', function(event){
+                //console.log(`Key: ${event.key} with keycode ${event.keyCode} has been pressed`); // Check which code pressed and the keycode
 
                 if (event.keyCode == 66 && sourceDroppableId >= 0 ) { // 32 = space, 66 = b
 
@@ -186,9 +220,22 @@ function QuoteApp() {
             }
         )
 
+        let update = (e) => {
+            if((typeof dataXY === "null")|| (typeof dataXY === "null")) {
+                setDiffXMousePoint( 0 - e.x)
+                diffYMousePoint = 0 - e.y
+            }
+            else{
+                setDiffXMousePoint((dataXY.x - e.x) * (-1))
+                diffYMousePoint = (dataXY.y - e.y) * (-1)
+                //console.log("Mouse X Diff", diffXMousePoint)
+            }
+
+        }
+
     }, [sourceDroppableId]);
 
-    // Moves item to folder
+
     function onDragEnd(result) {
         const { source, destination } = result;
 
@@ -218,29 +265,30 @@ function QuoteApp() {
     // To enable hovering over folder and opening/adding new folder to the right
     async function UserGreeting()  {
         if(isDraggingOverFolder){
-            await setState([...state, getItems(5, 0)])
+            await setState([...state, getItems(sourceIndex+1, 0)])
             setIsDragging(false)
             endTime = performance.now()
             let usedTime = (endTime - startTime)
             console.log("Dragged Item and Hovered over folder and had: " + usedTime + " milliseconds")
             totalTimeTest1 = totalTimeTest1 + usedTime
-            console.log("Totally used Dragging time for test 1: " + totalTimeTest1)
+            console.log("Totally used time for test 1: " + totalTimeTest1)
         }
 
     }
 
-    // Outputes the name of the user
+
+
     const handleMobile=(text)=>{
         console.log(text);
     }
 
 
+
     return (
         <div>
             <div  style={{ color: "lightgreen" }}>
-                <h1>TEST 1: Drag and Drop</h1>
-                <p>Thank you for taking your time. Here is the first task with the goal to move the item 2 to the folder 6.
-                    Please read the instructions carefully before you start:</p>
+                <p>Thank you for taking your time. Here is the first task with the goal to move the item 2 to the folder 2.
+                    Please read it carefully before you start and then click on START TEST 1</p>
                 <form>
                     <label>
                         1. Enter your Name:
@@ -249,17 +297,9 @@ function QuoteApp() {
                         />
                     </label>
                 </form>
-                <p>2. Click on START TEST 1 and Drag and Drop the item 2 into the corresponding folders (alternately the upper one then below one). Start by dragging the item 2 over the Folder NR. 0</p>
-                <p>3. Drag and Drop the new item 2 into the BELOW folder nr. 1 </p>
-                <p>4. Drag and Drop the new item 2 into the ABOVE Folder NR. 2 and so on till it is in the folder 6.</p>
-                <p>5. Stop the test by pressing on the END TEST 1 Button</p>
-                <br></br>
-                {disableFinish && <p>
-                    <p>6. Now go to the developer console window on Chrome, use the keyboard shortcut Control-Shift-J on Windows or Cmd-Option-J on a Mac </p>
-                    <p>OR Right Click with the mouse on the website and click on inspect to go to CONSOLE</p>
-                    <p>9. Go to CONSOLE and make a screenshot of the output and save it in order that you can later upload it on the google form after the second task.</p>
-                    <p>10. Do the eye gazer test 2 by clicking on <a className='a' target="_blank" href={"https://dndgazer-d0158.web.app/gazer"}> https://drag-and-drop-c9785.web.app/gazer</a> </p>
-                </p>  }
+                <p>2. Drag and Drop the new item 2 into the folder 0 by dragging it over the folder 0</p>
+                <p>3. Drag and Drop the new item 2 into the BELOW folder 1 </p>
+                <p>4. Drag and Drop the new item 2 into the folder 2</p>
                 <br></br>
                 <button
                     disabled={disable}
@@ -268,25 +308,14 @@ function QuoteApp() {
                         setDisable(true)
                     }}
                 >START TEST 1</button>
-
-                {disable &&
-                <button
-                    disabled={disableFinish}
-                    onClick={() => {
-                        let endTestTime1 = performance.now()
-                        console.log("Finished Test 1 and used: " + (endTestTime1-startTestTime))
-                        //setDisable(false)
-                        setDisableFinish(true)
-
-                    }}>
-                    END TEST 1</button> }
+                <button>END TEST 1</button>
             </div>
             <br></br>
             <br></br>
 
 
             <MouseTooltip
-                visible={false} // test 1 no selected item showing
+                visible={showBox}
                 offsetX={15}
                 offsetY={15}
             >
@@ -295,6 +324,10 @@ function QuoteApp() {
 
                     style={{
                         position: "absolute",
+                        // left: window.innerWidth/100*80/4*3 + window.innerWidth/10,  // In Studysession margin left and right 10%
+                        // top: window.innerHeight/2,
+                        //left: dataXY.x,
+                        //top: dataXY.y,
                         background: "grey",
                         border: '1px solid rgba(0, 0, 0, 10)',
                         padding: 5,
@@ -307,6 +340,23 @@ function QuoteApp() {
                 </div>
             </MouseTooltip>
 
+            {/*}*/}
+            {/*<button*/}
+            {/*    type="button"*/}
+            {/*    onClick={() => {*/}
+            {/*        setState([...state, []]);*/}
+            {/*    }}*/}
+            {/*>*/}
+            {/*    Add new Folder*/}
+            {/*</button>*/}
+            {/*<button*/}
+            {/*    type="button"*/}
+            {/*    onClick={() => {*/}
+            {/*        setState([...state, getItems(1)]);*/}
+            {/*    }}*/}
+            {/*>*/}
+            {/*    Add new File*/}
+            {/*</button>*/}
             <div style={{ display: "flex" }}>
                 <DragDropContext onDragEnd={onDragEnd}>
                     {state.map((el, ind) => (
@@ -320,11 +370,12 @@ function QuoteApp() {
                                     align="left"
                                 >
                                     <p>
-                                        <b> {myArray[ind]} </b>
+                                        <b>Folder NR. {ind-1} </b>
                                         {/*HOME\DOCUMENTS\Folder NR.*/}
                                     </p>
                                     <br></br>
                                     <button
+                                        // className="button_content"
                                         type="button"
                                         // style={{
                                         //     maxWidth: "285px",
@@ -333,13 +384,7 @@ function QuoteApp() {
                                         //     minHeight: "50px",
                                         //     marginBottom: "8px"
                                         // }}
-                                        onMouseOver={() => {
-                                            if(isDraggingOverFolder){
-                                                let nextArray = myArray[ind] + "/" + (ind)
-                                                setMyArray(oldArray => [...oldArray, nextArray])
-                                            }
-                                            UserGreeting()
-                                        }}
+                                        onMouseOver={UserGreeting}
                                         onClick={() => {
                                             setState([...state, getItems(5)]);
                                             numberTimesClickedFolder = numberTimesClickedFolder + 1
@@ -347,7 +392,7 @@ function QuoteApp() {
 
                                             if (numberTimesClickedFolder === 1){
                                                 startTimeClickedFolder1 = performance.now()
-                                            } else if (numberTimesClickedFolder === 7){
+                                            } else if (numberTimesClickedFolder === 3){
                                                 endTimeClickedFolder2 = performance.now()
                                                 totalTimeClickingFolders = endTimeClickedFolder2-startTimeClickedFolder1
                                                 console.log("Test 2: Used time to click/open three folders: " + (totalTimeClickingFolders))
@@ -389,15 +434,21 @@ function QuoteApp() {
                                                         {" " + item.content}
                                                     </div>
 
+
+                                                    {/*{console.log("dragged item:" + snapshot.isDragging)}*/}
+                                                    {/*{this.Greeting2(snapshot.isDragging, index, ind.toString())}*/}
                                                     {snapshot.isDragging ? setsourceIndex(index) : ''}
                                                     {snapshot.isDragging ? setsourceDroppableId(ind.toString()) : ''}
 
                                                     {snapshot.isDragging ? setItemName(item.id.substr(0, 7) + " selected") : '' }
                                                     <div style={{ color: "lightgreen" }}>{snapshot.isDragging ? (startTime = performance.now()) : ""  }</div>
+                                                    {/*{snapshot.isDragging ? setStartTime(performance.now()) : ''}*/}
 
                                                     {(sourceIndex > 0 && !isDraggingOverFolder) ? (console.log("Is dragging item " + sourceIndex  + " from Folder Nr " + (sourceDroppableId-1) + " and started: " + startTime)) : ""}
                                                     {snapshot.isDragging ? setShowBox(true) : '' }
                                                     {snapshot.isDragging ? setIsDragging(true) : false }
+
+
 
                                                     <div
                                                         style={{
@@ -405,7 +456,19 @@ function QuoteApp() {
                                                             justifyContent: "space-around"
                                                         }}
                                                     >
+                                                        {/*<button*/}
+                                                        {/*    type="button"*/}
+                                                        {/*    onClick={() => {*/}
 
+                                                        {/*        // Send the index=row of the clicked item*/}
+                                                        {/*        setsourceIndex(index)*/}
+
+                                                        {/*        // Send the column/folder of the clicked item*/}
+                                                        {/*        setsourceDroppableId(ind.toString())*/}
+                                                        {/*    }}*/}
+                                                        {/*>*/}
+                                                        {/*    move*/}
+                                                        {/*</button>*/}
                                                     </div>
                                                 </div>
                                             )}
@@ -413,6 +476,7 @@ function QuoteApp() {
                                     ))}
                                     {provided.placeholder}
                                     <button
+                                        // className="button_content"
                                         type="button"
                                         // style={{
                                         //     maxWidth: "285px",
@@ -421,14 +485,7 @@ function QuoteApp() {
                                         //     minHeight: "50px",
                                         //     marginBottom: "8px"
                                         // }}
-                                        onMouseOver={() => {
-                                            if(isDraggingOverFolder){
-                                                let nextArray = myArray[ind] + "/" + (ind)
-                                                setMyArray(oldArray => [...oldArray, nextArray])
-                                            }
-                                            UserGreeting()
-                                        }}
-
+                                        onMouseOver={UserGreeting}
                                         onClick={() => {
                                             setState([...state, getItems(5)]);
                                             numberTimesClickedFolder = numberTimesClickedFolder + 1
@@ -447,7 +504,7 @@ function QuoteApp() {
                                             <div
                                                 style={{ marginTop: "20px", marginRight: "5px" }}
                                             >
-                                                folder nr. {ind}</div>
+                                                Folder NR. 1 </div>
                                         </div>
 
                                     </button>

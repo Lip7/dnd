@@ -10,6 +10,7 @@ import Authservice from "./components/services/Authservice";
 import {Component} from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Gazer from "./components/Login/Gazer";
+import DnDwithoutGazer from "./components/Login/DnDwithoutGazer"
 
 
 class App extends Component{
@@ -50,7 +51,7 @@ class App extends Component{
                             <Route exact path="/folders" component={Folders}/>
                             <Route exact path="/signup" component={Signup}/>
                             <ProtectedRoute exact path="/settings" component={Settings}/>
-                            <ProtectedRoute path="*" component={StudySession}/>
+                            <ProtectedRoute path="*" component={Folders}/>
                             <Route path="*" component={Folders}/>
                         </Switch>
 
